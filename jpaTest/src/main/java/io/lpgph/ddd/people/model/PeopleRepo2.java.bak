@@ -1,0 +1,12 @@
+package io.lpgph.ddd.people.model;
+
+import org.springframework.data.repository.Repository;
+
+import java.util.Optional;
+
+public interface PeopleRepo2 extends Repository<People, Long> {
+  // public interface PeopleRepo extends JpaRepository<People, PeopleId> {
+  People save(People p);
+
+  Optional<People> findById(Long id);
+}

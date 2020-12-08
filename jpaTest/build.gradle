@@ -1,0 +1,114 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.0'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+//    id 'java'
+    id 'java-library'
+}
+
+group = 'cc.dshui'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+ext {
+    set("querydslVersion", "4.4.0")
+    compileJava.options.encoding = "UTF-8"
+    compileTestJava.options.encoding = "UTF-8"
+    javadoc.options.encoding = "UTF-8"
+}
+
+repositories {
+    mavenLocal()
+//        mavenCentral()
+//        jcenter()
+    maven { url 'https://maven.aliyun.com/repository/central' }
+    maven { url 'https://maven.aliyun.com/repository/jcenter' }
+    maven { url 'https://maven.aliyun.com/repository/releases' }
+    maven { url 'https://maven.aliyun.com/repository/snapshots' }
+    maven { url 'https://maven.aliyun.com/repository/spring' }
+    maven { url 'https://repo.spring.io/milestone' }
+}
+
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+    testRuntimeClasspath {
+        extendsFrom developmentOnly
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+//定义目录结构
+//sourceSets {
+//    main {
+//        java {
+//            srcDirs("$projectDir/src/main/java", "$buildDir/generated") // 指定源码目录
+//        }
+//        resources {
+//            srcDirs = ["src/main/resources", "src/main/java"] //指定资源目录
+//            includes = ["**/*"]
+//            excludes = ["**/*.java,**/*.kt"]
+//        }
+//    }
+//    test {
+//        java {
+//            srcDirs("src/test/java") // 指定源码目录
+//        }
+//        resources {
+//            srcDirs = ["src/test/resources", "src/test/java"] //指定资源目录
+//            includes = ["**/*"]
+//            excludes = ["**/*.java,**/*.kt"]
+//        }
+//    }
+//}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation("org.springframework.boot:spring-boot-starter-log4j2")
+
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+//    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+
+//    implementation 'org.springframework.data:spring-data-envers'
+    implementation("com.vladmihalcea:hibernate-types-52:2.9.12")
+
+    implementation 'com.google.guava:guava:29.0-jre'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'mysql:mysql-connector-java'
+
+    //自定义注解  映射配置文件
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    compileOnly("com.querydsl:querydsl-apt:${querydslVersion}")
+    implementation("com.querydsl:querydsl-jpa:${querydslVersion}")
+    annotationProcessor("com.querydsl:querydsl-apt:${querydslVersion}:jpa")
+    annotationProcessor("javax.annotation:javax.annotation-api:1.3.2")
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+configurations.all {
+    resolutionStrategy.dependencySubstitution.all { dependency ->
+        if (dependency.requested instanceof ModuleComponentSelector && dependency.requested.module == 'spring-boot-starter-logging') {
+            dependency.useTarget("org.springframework.boot:spring-boot-starter-log4j2:$dependency.requested.version", 'Use Log4j2 instead of Logback')
+        }
+    }
+}
+
+
+test {
+    useJUnitPlatform()
+}

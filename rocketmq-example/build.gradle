@@ -1,0 +1,9 @@
+allprojects {
+    group = 'com.dshui'
+    version = '1.0-SNAPSHOT'
+}
+
+subprojects {
+
+
+}
