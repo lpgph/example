@@ -27,8 +27,8 @@ public class Book {
 
   private String name;
 
-//  @MappedCollection
-  private Set<UserItem> users;
+  @MappedCollection(idColumn = "book_id")
+  private Set<UserItem> users = new HashSet<>();
 
   /** 创建时间 */
   @CreatedDate private LocalDateTime gmtCreate;
@@ -51,9 +51,9 @@ public class Book {
     domainEvents.add(new CreateBookEvent(this.getId(), "people_____" + this.name));
   }
 
-  public void borrow(long peopleId) {
+  public void borrow(UserItem user) {
     if (this.users == null) this.users = new HashSet<>();
-    this.users.add(UserItem.create(peopleId));
+    this.users.add(user);
   }
 
   @DomainEvents

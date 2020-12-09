@@ -3,6 +3,7 @@ package io.lpgph.ddd;
 import com.querydsl.sql.codegen.MetaDataExporter;
 import io.lpgph.ddd.book.model.Book;
 import io.lpgph.ddd.book.model.BookRepo;
+import io.lpgph.ddd.book.model.UserItem;
 import io.lpgph.ddd.event.model.EventStored;
 import io.lpgph.ddd.user.model.CreateUserEvent;
 import io.lpgph.ddd.user.model.UserId;
@@ -51,7 +52,9 @@ class UserTests {
 
   @Test
   void createBook(){
-    bookRepo.save(new Book("秋"))
+    Book book = new Book("秋");
+    book.borrow(UserItem.create(1L));
+    bookRepo.save(book)
             .as(StepVerifier::create)
             .expectNextCount(1)
             .verifyComplete();
