@@ -1,13 +1,20 @@
 package io.lpgph.ddd;
 
+import io.lpgph.ddd.user.LongToUserIdConverter;
+import io.lpgph.ddd.user.UserIdToLongConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jdbc.core.convert.JdbcCustomConversions;
 import org.springframework.data.jdbc.repository.config.EnableJdbcAuditing;
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 import org.springframework.data.jdbc.repository.config.MyBatisJdbcConfiguration;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Configuration
@@ -31,4 +38,12 @@ public class JdbcConfig {
     return () -> Optional.of(1L);
   }
 
+
+  @Bean
+  public JdbcCustomConversions jdbcCustomConversions() {
+    List<Converter<?,?>> converters = new ArrayList<>();
+    converters.add(new LongToUserIdConverter());
+    converters.add(new UserIdToLongConverter());
+    return new JdbcCustomConversions(converters);
+  }
 }

@@ -7,6 +7,7 @@ import io.lpgph.ddd.user.model.UserId;
 import io.lpgph.ddd.user.model.UserRepository;
 import io.lpgph.ddd.user.model.User;
 import io.lpgph.ddd.event.model.EventStoredRepository;
+import io.lpgph.ddd.utils.json.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,12 @@ class UserTests {
     exporter.setPackageName("io.lpgph.ddd.query");
     exporter.setTargetFolder(new File("src/main/java"));
     exporter.export(conn.getMetaData());
+  }
+
+
+  @Test
+  void query(){
+    userRepository.findByName("test").ifPresent(u->    log.info("\n\n\n{}\n\n\n", JsonUtil.toJson(u)));
   }
 
   @Test
