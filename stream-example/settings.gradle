@@ -1,0 +1,21 @@
+pluginManagement {
+    repositories {
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = 'stream-example'
+
+include('rocketmq-consume')
+include('rocketmq-produce')
+
+include('fun-rocketmq-consume-example')
+include('fun-rocketmq-produce-example')
+
+//include('webflux-fun-rocketmq-consume-example')
+//include('webflux-fun-rocketmq-produce-example')
+
+include('rabbitmq-consume-example')
+include('rabbitmq-produce-example')

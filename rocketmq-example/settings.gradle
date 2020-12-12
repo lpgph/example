@@ -1,8 +1,0 @@
-rootProject.name = 'stream-example'
-
-
-include('rocketmq-consume-example')
-include('rocketmq-produce-example')
-
-include('rabbitmq-consume-example')
-include('rabbitmq-produce-example')
