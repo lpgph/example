@@ -1,0 +1,19 @@
+pluginManagement {
+    repositories {
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = 'rocketmq-example'
+
+include('web-annotation-consume')
+include('web-annotation-produce')
+
+include('web-function-consume')
+include('web-function-produce')
+
+include('webflux-function-consume')
+include('webflux-function-produce')
+

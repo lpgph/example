@@ -1,0 +1,17 @@
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+server:
+  port: 28082
+spring:
+  application:
+    name: rocketmq-consume-example
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848

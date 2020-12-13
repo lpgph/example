@@ -1,0 +1,51 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+        input1-in-0:
+          content-type: text/plain
+          destination: test-topic
+          group: test-group1
+        input2-in-0:
+          consumer:
+            concurrency: 20
+            maxAttempts: 1
+          content-type: text/plain
+          destination: test-topic
+          group: test-group2
+        input3-in-0:
+          consumer:
+            concurrency: 20
+          content-type: application/json
+          destination: test-topic
+          group: test-group3
+        input4-in-0:
+          consumer:
+            concurrency: 5
+          content-type: text/plain
+          destination: TransactionTopic
+          group: transaction-group
+        input5-in-0:
+          content-type: text/plain
+          destination: pull-topic
+          group: pull-topic-group
+      rocketmq:
+        binder:
+          name-server: 192.168.0.173:9876
+        bindings:
+          input1-in-0:
+            consumer:
+              orderly: true
+          input2-in-0:
+            consumer:
+              orderly: false
+              tags: tagStr
+          input3-in-0:
+            consumer:
+              tags: tagObj
+      function:
+        definition: input1;input2;input3;input4;input5
+#        bindings:
+#          output1: input1
+#          output2: input2
+#          output3: input3
