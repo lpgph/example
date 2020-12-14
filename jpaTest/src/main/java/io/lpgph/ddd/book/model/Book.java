@@ -26,7 +26,7 @@ import java.util.Set;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Book {
-  //   public class Book extends AbstractAggregateRoot {
+//     public class Book extends AbstractAggregateRoot {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
