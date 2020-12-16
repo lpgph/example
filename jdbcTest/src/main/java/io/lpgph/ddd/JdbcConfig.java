@@ -1,5 +1,6 @@
 package io.lpgph.ddd;
 
+import io.lpgph.ddd.book.converter.*;
 import io.lpgph.ddd.user.LongToUserIdConverter;
 import io.lpgph.ddd.user.UserIdToLongConverter;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +14,6 @@ import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 import org.springframework.data.jdbc.repository.config.MyBatisJdbcConfiguration;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,12 +38,20 @@ public class JdbcConfig {
     return () -> Optional.of(1L);
   }
 
-
   @Bean
   public JdbcCustomConversions jdbcCustomConversions() {
-    List<Converter<?,?>> converters = new ArrayList<>();
+    List<Converter<?, ?>> converters = new ArrayList<>();
     converters.add(new LongToUserIdConverter());
     converters.add(new UserIdToLongConverter());
+
+    converters.add(new BookAdToJsonConverter());
+    converters.add(new JsonToBookAdConverter());
+
+    converters.add(new JsonToStringArrayConverter());
+    converters.add(new StringArrayToJsonConverter());
+
+    converters.add(new JsonToObjectArrayConverter());
+    converters.add(new ObjectArrayToJsonConverter());
     return new JdbcCustomConversions(converters);
   }
 }

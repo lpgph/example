@@ -10,10 +10,7 @@ import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /** 产品属性 */
 @NoArgsConstructor
@@ -22,13 +19,21 @@ import java.util.Set;
 @Table("jdbc_book")
 public class Book {
 
-  @Id
-  private Long id;
+  @Id private Long id;
 
   private String name;
 
   @MappedCollection(idColumn = "book_id")
   private Set<UserItem> users = new HashSet<>();
+
+  @MappedCollection(idColumn = "book_id")
+  private Set<BookAttr> attrs = new HashSet<>();
+
+  private String[] tags;
+
+  private List<BookPrice> prices;
+
+  private BookAd ad;
 
   /** 创建时间 */
   @CreatedDate private LocalDateTime gmtCreate;
@@ -46,14 +51,29 @@ public class Book {
 
   @Transient private final transient List<BookEvent> domainEvents = new ArrayList<>();
 
-  public Book(String name) {
+  public Book(String name, String... tag) {
     this.name = name;
+    this.tags = tag;
+    this.attrs = new HashSet<>();
     domainEvents.add(new CreateBookEvent(this.getId(), "people_____" + this.name));
+  }
+
+  public void change(List<BookPrice> prices) {
+    this.prices = prices;
+  }
+
+  public void change(BookAd ad) {
+    this.ad = ad;
   }
 
   public void borrow(UserItem user) {
     if (this.users == null) this.users = new HashSet<>();
     this.users.add(user);
+  }
+
+  public void addAttr(BookAttr attr) {
+    if (this.attrs == null) this.attrs = new HashSet<>();
+    this.attrs.add(attr);
   }
 
   @DomainEvents
