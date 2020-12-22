@@ -1,0 +1,44 @@
+server:
+  #  address: 127.0.0.1
+  port: 8090
+  #  servlet:
+  #    context-path: /uaa
+  servlet:
+    session:
+      cookie:
+        name: s0
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  application:
+    name: uaa
+  main:
+    allow-bean-definition-overriding: true
+  output:
+    ansi:
+      enabled: ALWAYS #控制台彩色输出
+  session:
+    store-type: redis
+  redis:
+    port: 6379
+    host: 127.0.0.1
+    password: root
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: classpath:pubkey.pub
+#  config:
+#    activate:
+#      on-profile:
+
+logging:
+  level:
+    org:
+      springframework: INFO # INFO TRACE
+    io.lettuce.core: ERROR
+    #      springframework: DEBUG
+    com:
+      alibaba:
+        nacos: ERROR

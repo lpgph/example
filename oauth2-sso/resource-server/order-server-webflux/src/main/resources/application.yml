@@ -1,0 +1,16 @@
+spring:
+  profiles:
+    active: local
+#  config:
+#    activate:
+#      on-profile: localOauth2
+#    import: test.yml  # 该文件git忽略 属于开发人员各自配置文件
+#  main:
+#    allow-bean-definition-overriding: true
+#  http:
+#    encoding:
+#      charset: UTF-8
+#      enabled: true
+#      force: true
+
+

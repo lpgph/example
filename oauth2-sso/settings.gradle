@@ -1,0 +1,31 @@
+pluginManagement {
+    repositories {
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = 'oauth2-sso'
+
+include(':gateway:api-gateway')
+include(':gateway:mobile-shopping')
+include(':gateway:web-shopping')
+include(':gateway:web-marketing')
+
+
+include(':uaa:auth-server')
+include(':uaa:oidc-server')
+
+include('uaa-server')  // uaa auth
+//include('new-uaa-server')  // uaa auth
+//include('authorization-server')
+//include('authentication-server')
+//include('resource-owner')
+
+include(':client:client1')
+include(':client:client2')
+
+include(':resource-server:product-server-web-old')
+include(':resource-server:goods-server-web')
+include(':resource-server:order-server-webflux')

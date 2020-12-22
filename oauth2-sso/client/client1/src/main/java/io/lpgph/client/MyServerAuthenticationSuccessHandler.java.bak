@@ -1,0 +1,46 @@
+package io.lpgph.client;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.server.WebFilterExchange;
+import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.netty.ByteBufFlux;
+
+@Slf4j
+public class MyServerAuthenticationSuccessHandler implements ServerAuthenticationSuccessHandler {
+
+  private ObjectMapper objectMapper = new ObjectMapper();
+
+  @Override
+  public Mono<Void> onAuthenticationSuccess(
+      WebFilterExchange webFilterExchange, Authentication authentication) {
+    ServerWebExchange exchange = webFilterExchange.getExchange();
+    ServerHttpResponse response = exchange.getResponse();
+
+    try {
+      log.info("response headers {}", objectMapper.writeValueAsString(response.getHeaders()));
+      log.info("response cookies {}", objectMapper.writeValueAsString(response.getCookies()));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    response.setStatusCode(HttpStatus.OK);
+    response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+    byte[] contest = new byte[] {};
+    try {
+      contest = new ObjectMapper().writeValueAsBytes(authentication);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
+    return response.writeAndFlushWith(
+        Flux.just(ByteBufFlux.just(response.bufferFactory().wrap(contest))));
+  }
+}

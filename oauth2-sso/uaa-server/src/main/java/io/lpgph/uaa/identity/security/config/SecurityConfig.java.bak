@@ -1,0 +1,69 @@
+package io.lpgph.identity.security.config;
+
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+import static org.springframework.security.config.Customizer.withDefaults;
+
+/**
+ * @see
+ *     org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+ * @see org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+ */
+@AllArgsConstructor
+@EnableWebSecurity
+public class SecurityConfig {
+
+  private final UserDetailsService userDetailsService;
+
+  private final PasswordEncoder passwordEncoder;
+
+  @Bean
+  WebSecurityCustomizer webSecurityCustomizer() {
+    return (web) ->
+        web.ignoring().antMatchers("/login.html", "/css/**", "/js/**", "/images/**", "/webjars/**");
+  }
+
+  @Bean
+  SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http.authorizeRequests(
+            authorizeRequests ->
+                authorizeRequests
+                    .antMatchers("/oauth/**", "/login/**")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated())
+        .formLogin(withDefaults())
+        .logout(withDefaults())
+        .cors(withDefaults())
+        .csrf(AbstractHttpConfigurer::disable)
+        .anonymous(AbstractHttpConfigurer::disable)
+        .headers(headers -> headers.frameOptions().disable().cacheControl());
+    return http.build();
+  }
+
+  private AuthenticationManagerBuilder auth;
+
+  @Autowired
+  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+    this.auth = auth;
+  }
+
+  @Bean
+  AuthenticationManager authenticationManager() throws Exception {
+    return auth.build();
+  }
+}

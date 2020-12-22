@@ -1,0 +1,22 @@
+server:
+  port: 8082
+  tomcat:
+    uri-encoding: UTF-8
+#  ssl:
+#    key-store: classpath:test.p12
+#    key-store-password: testpass
+#    keyStoreType: PKCS12
+#    keyAlias: test
+  servlet:
+    session:
+      cookie:
+        name: g1
+
+spring:
+  application:
+    name: cms-gateway
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848

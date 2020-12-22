@@ -1,0 +1,44 @@
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: classpath:pubkey.pub
+      client:
+        registration:
+          order-server:
+            provider: order-server
+            client-id: order
+            client-secret: order
+            authorization-grant-type: client_credentials
+            scope: read,write
+        provider:
+          order-server:
+            authorization-uri: http://localhost:8090/oauth/authorize
+            token-uri: http://localhost:8090/oauth/token
+  #            jwk-set-uri: http://localhost:8090/oauth/token_key
+  output:
+    ansi:
+      enabled: ALWAYS #控制台彩色输出
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+logging:
+  level:
+    org:
+      springframework: INFO  # INFO TRACE
+    com:
+      alibaba:
+        nacos: ERROR
+
+#开启请求压缩功能
+feign:
+  compression:
+    request:
+      enabled: true #开启响应压缩功能
+      mime-types: text/xml;application/xml;application/json #指定压缩请求数据类型
+      min-request-size: 2048 #如果传输超过该字节，就对其进行压缩
+    response:
+      enabled: true
