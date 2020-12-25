@@ -32,8 +32,8 @@ public class Book {
   private String[] tags;
 
   private List<BookPrice> prices;
-
-  private BookAd ad;
+//
+//  private BookAd ad;
 
   /** 创建时间 */
   @CreatedDate private LocalDateTime gmtCreate;
@@ -62,9 +62,9 @@ public class Book {
     this.prices = prices;
   }
 
-  public void change(BookAd ad) {
-    this.ad = ad;
-  }
+//  public void change(BookAd ad) {
+//    this.ad = ad;
+//  }
 
   public void borrow(UserItem user) {
     if (this.users == null) this.users = new HashSet<>();
@@ -74,6 +74,10 @@ public class Book {
   public void addAttr(BookAttr attr) {
     if (this.attrs == null) this.attrs = new HashSet<>();
     this.attrs.add(attr);
+  }
+
+  public void changeAttr(Set<BookAttr> attrs) {
+    this.attrs = attrs;
   }
 
   @DomainEvents

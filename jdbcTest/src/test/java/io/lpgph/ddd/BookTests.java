@@ -1,5 +1,6 @@
 package io.lpgph.ddd;
 
+import io.lpgph.ddd.book.BookService;
 import io.lpgph.ddd.book.model.*;
 import io.lpgph.ddd.utils.json.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -15,6 +17,8 @@ import java.util.Set;
 class BookTests {
 
   @Autowired private BookRepo bookRepo;
+
+  @Autowired private BookService bookService;
 
   @Test
   void query() {
@@ -34,16 +38,32 @@ class BookTests {
   }
 
   @Test
+  void update() {
+    bookRepo
+        .findById(10L)
+        .ifPresent(
+            o -> {
+              o.changeAttr(new HashSet<>());
+              bookRepo.save(o);
+            });
+  }
+
+  @Test
   void create2() {
     Book book = new Book("<飘333>", "book", "hhh");
     BookAttr attr = new BookAttr(1L, "属性1");
     book.addAttr(attr);
-
-    book.change(new BookAd(true, false));
-//    book.change(List.of(new BookPrice(1, 100L), new BookPrice(2, 200L)));
+    //
+//    book.change(new BookAd(true, false));
+    //    book.change(List.of(new BookPrice(1, 100L), new BookPrice(2, 200L)));
 
     book.borrow(UserItem.create(1L));
     bookRepo.save(book);
+  }
+
+  @Test
+  void testError() {
+    bookService.create();
   }
 
   @Test

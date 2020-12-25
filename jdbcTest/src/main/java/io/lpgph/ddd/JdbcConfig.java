@@ -20,7 +20,7 @@ import java.util.Optional;
 @Configuration
 @EnableJdbcAuditing
 @EnableJdbcRepositories
-@Import(MyBatisJdbcConfiguration.class)
+//@Import(MyBatisJdbcConfiguration.class)
 public class JdbcConfig {
 
   //  @Bean
