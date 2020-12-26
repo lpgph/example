@@ -3,6 +3,7 @@ server:
   tomcat:
     uri-encoding: UTF-8
 
+
 spring:
   application:
     name: erp
@@ -28,12 +29,14 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=true&allowMultiQueries=true&nullNamePatternMatchesAll=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
     username: test
     password: test
-#    type: com.zaxxer.hikari.HikariDataSource
+    #    type: com.zaxxer.hikari.HikariDataSource
     sql-script-encoding: UTF-8
     hikari:
       ##  Hikari 连接池配置 ------ 详细配置请访问：https://github.com/brettwooldridge/HikariCP
       ## 最小空闲连接数量
       minimum-idle: 5
+#      data-source-properties:
+#        stringtype: unspecified
       ## 空闲连接存活最大时间，默认600000（10分钟）
       idle-timeout: 180000
       ## 连接池最大连接数，默认是10

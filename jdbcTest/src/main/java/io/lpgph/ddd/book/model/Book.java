@@ -3,6 +3,7 @@ package io.lpgph.ddd.book.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.boot.autoconfigure.data.ConditionalOnRepositoryType;
 import org.springframework.data.annotation.*;
 import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.data.domain.DomainEvents;
@@ -23,17 +24,17 @@ public class Book {
 
   private String name;
 
-  @MappedCollection(idColumn = "book_id")
-  private Set<UserItem> users = new HashSet<>();
+  //  @MappedCollection(idColumn = "book_id")
+  //  private Set<UserItem> users = new HashSet<>();
 
   @MappedCollection(idColumn = "book_id")
   private Set<BookAttr> attrs = new HashSet<>();
 
-  private String[] tags;
+  //  private String[] tags;
 
-  private List<BookPrice> prices;
-//
-//  private BookAd ad;
+  //  private List<BookPrice> prices;
+  //
+  //  private BookAd ad;
 
   /** 创建时间 */
   @CreatedDate private LocalDateTime gmtCreate;
@@ -51,25 +52,28 @@ public class Book {
 
   @Transient private final transient List<BookEvent> domainEvents = new ArrayList<>();
 
-  public Book(String name, String... tag) {
+  public Book(String name) {
     this.name = name;
-    this.tags = tag;
     this.attrs = new HashSet<>();
     domainEvents.add(new CreateBookEvent(this.getId(), "people_____" + this.name));
   }
 
-  public void change(List<BookPrice> prices) {
-    this.prices = prices;
-  }
+  //  public void changeTags(String... tag){
+  //    this.tags = tag;
+  //  }
 
-//  public void change(BookAd ad) {
-//    this.ad = ad;
-//  }
+  //  public void change(List<BookPrice> prices) {
+  //    this.prices = prices;
+  //  }
 
-  public void borrow(UserItem user) {
-    if (this.users == null) this.users = new HashSet<>();
-    this.users.add(user);
-  }
+  //  public void change(BookAd ad) {
+  //    this.ad = ad;
+  //  }
+
+  //  public void borrow(UserItem user) {
+  //    if (this.users == null) this.users = new HashSet<>();
+  //    this.users.add(user);
+  //  }
 
   public void addAttr(BookAttr attr) {
     if (this.attrs == null) this.attrs = new HashSet<>();
@@ -78,6 +82,10 @@ public class Book {
 
   public void changeAttr(Set<BookAttr> attrs) {
     this.attrs = attrs;
+  }
+
+  public void clearAttr() {
+    this.attrs.clear();
   }
 
   @DomainEvents

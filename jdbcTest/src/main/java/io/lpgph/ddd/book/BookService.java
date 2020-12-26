@@ -15,7 +15,7 @@ public class BookService {
 
   @Transactional
   public void create() {
-    Book book = new Book("<飘333>", "book", "hhh");
+    Book book = new Book("<飘333>");
     Book newBook = bookRepo.save(book);
     log.info("\n\nbook\n{}\nnewBook\n{}\n\n", JsonUtil.toJson(book), JsonUtil.toJson(newBook));
 
@@ -26,7 +26,7 @@ public class BookService {
     if (true) throw new RuntimeException("ttttt");
     //    book.change(List.of(new BookPrice(1, 100L), new BookPrice(2, 200L)));
 
-    newBook.borrow(UserItem.create(1L));
+//    newBook.borrow(UserItem.create(1L));
     bookRepo.save(newBook);
   }
 }

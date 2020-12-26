@@ -1,17 +1,14 @@
 package io.lpgph.ddd.book.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.lang.annotation.Documented;
 
 /** 产品属性 */
-@AllArgsConstructor
-@Setter
-@Getter
+@Value
 public class BookAd {
 
-  private Boolean isVip;
+  Boolean isVip;
 
-  private Boolean isShow;
+  Boolean isShow;
 }
