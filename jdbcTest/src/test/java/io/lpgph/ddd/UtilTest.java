@@ -1,5 +1,6 @@
 package io.lpgph.ddd;
 
+import com.hankcs.hanlp.HanLP;
 import io.lpgph.ddd.utils.json.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,16 @@ import java.util.stream.Collectors;
 @Slf4j
 @SpringBootTest
 public class UtilTest {
+
+  @Test
+  void test() {
+    List<String> sentence =
+        List.of("回力官方旗舰店男女鞋2020秋冬潮流休闲跑步鞋网面透气情侣运动鞋", "FreeTie经典帆布鞋 小米休闲鞋子 中帮 低帮 男款 女款 小白鞋");
+    sentence.forEach(
+        str -> {
+          System.out.println(JsonUtil.toJson(HanLP.segment(str)));
+        });
+  }
 
   @Test
   void streamReduce() {
@@ -89,5 +100,12 @@ public class UtilTest {
                   return maps;
                 });
     log.info(JsonUtil.toJson(sku));
+  }
+
+  @Test
+  void testEquals() {
+    Set<Map<String, Integer>> m1 = Set.of(Map.of("t", 1, "a", 3));
+    Set<Map<String, Integer>> m2 = Set.of(Map.of("a", 3, "t", 1));
+    System.out.println(Objects.equals(m1, m2));
   }
 }

@@ -37,6 +37,8 @@ dependencies {
     implementation 'com.google.guava:guava:29.0-jre'
     implementation 'mysql:mysql-connector-java'
 
+    implementation 'com.hankcs:hanlp:portable-1.7.8'
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'mysql:mysql-connector-java'
 
