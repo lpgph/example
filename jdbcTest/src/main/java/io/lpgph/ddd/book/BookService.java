@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Set;
+
 @Slf4j
 @Service
 public class BookService {
@@ -15,18 +17,17 @@ public class BookService {
 
   @Transactional
   public void create() {
-    Book book = new Book("<飘333>");
+    Book book = Book.create("<飘333>");
     Book newBook = bookRepo.save(book);
     log.info("\n\nbook\n{}\nnewBook\n{}\n\n", JsonUtil.toJson(book), JsonUtil.toJson(newBook));
 
-    BookAttr attr = new BookAttr(1L, "属性1");
-    newBook.addAttr(attr);
+    newBook.addAttr(1L, "属性1", Set.of(1L, 2L, 3L));
 
-//    newBook.change(new BookAd(true, false));
+    //    newBook.change(new BookAd(true, false));
     if (true) throw new RuntimeException("ttttt");
     //    book.change(List.of(new BookPrice(1, 100L), new BookPrice(2, 200L)));
 
-//    newBook.borrow(UserItem.create(1L));
+    //    newBook.borrow(UserItem.create(1L));
     bookRepo.save(newBook);
   }
 }

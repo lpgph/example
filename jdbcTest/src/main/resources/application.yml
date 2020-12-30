@@ -69,7 +69,6 @@ logging:
     cc.dshui: INFO
     com.iit: INFO
 
-
 #mybatis:
 #  #  mapper-locations: classpath:com/iit/**/mapper/**.xml,classpath:com/dshui/**/**.xml
 #  type-handlers-package:

@@ -1,12 +1,13 @@
 package io.lpgph.ddd.user.model;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
-@NoArgsConstructor
+@Value
 public class CreateUserEvent extends UserEvent {
-  private String name;
+  String name;
 
   public CreateUserEvent(UserId userId, String name) {
     super(userId);

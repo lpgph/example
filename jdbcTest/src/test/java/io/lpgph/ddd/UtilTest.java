@@ -2,6 +2,7 @@ package io.lpgph.ddd;
 
 import com.hankcs.hanlp.HanLP;
 import io.lpgph.ddd.utils.json.JsonUtil;
+import io.lpgph.ddd.utils.json.TypeReference;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +23,19 @@ public class UtilTest {
           System.out.println(JsonUtil.toJson(HanLP.segment(str)));
         });
   }
+
+
+    @Test
+    void jsonTest() {
+        String str = "[1,2,3,4,5,3,3,3,6,7,8,9,10,11,1,12]";
+        Set<Integer> ary = JsonUtil.fromJson(str, new TypeReference<>() {});
+        assert ary != null;
+        ary.forEach(item -> log.info("{}", item));
+
+        LinkedHashSet<Integer> ary2 = JsonUtil.fromJson(str, new TypeReference<>() {});
+        assert ary2 != null;
+        ary2.forEach(item -> log.info("{}", item));
+    }
 
   @Test
   void streamReduce() {

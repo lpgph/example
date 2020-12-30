@@ -8,7 +8,9 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("jdbc_book_attr_value")
 public class BookAttrValue {
 
-  Long attrValueId;
+  Long propValueId;
 
-  String name;
+  public static BookAttrValue create(Long propValueId) {
+    return new BookAttrValue(propValueId);
+  }
 }

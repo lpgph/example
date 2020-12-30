@@ -1,17 +1,16 @@
-package io.lpgph.ddd.book.model;
+package io.lpgph.ddd.user.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /** 产品属性 */
+@NoArgsConstructor
 @AllArgsConstructor
-@Setter
 @Getter
-public class BookPrice {
+public class UserProp {
+
+  private Boolean isVip;
 
   private Integer level;
-
-  private Long price;
 }

@@ -17,34 +17,34 @@ CREATE TABLE `jdbc_book`
 (
     `id`           bigint NOT NULL AUTO_INCREMENT,
     `name`         varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-    `tags`         json                                   DEFAULT NULL,
     `created_by`   bigint                                 DEFAULT NULL,
     `gmt_create`   datetime(6)                            DEFAULT NULL,
     `gmt_modified` datetime(6)                            DEFAULT NULL,
     `modified_by`  bigint                                 DEFAULT NULL,
     `version`      bigint                                 DEFAULT NULL,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    index idx_name (`name`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci;
 
 CREATE TABLE `jdbc_book_attr`
 (
+    `id`      bigint NOT NULL AUTO_INCREMENT,
     `book_id` bigint not NULL,
-    `attr_id` bigint not NULL,
+    `prop_id` bigint not NULL,
     `name`    varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-    PRIMARY KEY (`book_id`, `attr_id`)
+    PRIMARY KEY (`id`),
+    unique INDEX (`book_id`, `prop_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci;
 
 CREATE TABLE `jdbc_book_attr_value`
 (
-    `book_id`       bigint not NULL,
-    `attr_id`       bigint not NULL,
-    `attr_value_id` bigint not NULL,
-    `name`          varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-    PRIMARY KEY (`book_id`, `attr_id`, `attr_value_id`)
+    `book_attr_id`  bigint not NULL,
+    `prop_value_id` bigint not NULL,
+    PRIMARY KEY (`book_attr_id`, `prop_value_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci;

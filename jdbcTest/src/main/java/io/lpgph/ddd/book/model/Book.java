@@ -1,9 +1,7 @@
 package io.lpgph.ddd.book.model;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.boot.autoconfigure.data.ConditionalOnRepositoryType;
 import org.springframework.data.annotation.*;
 import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.data.domain.DomainEvents;
@@ -12,80 +10,73 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /** 产品属性 */
-@NoArgsConstructor
-@Setter
 @Getter
+@Builder
 @Table("jdbc_book")
 public class Book {
 
-  @Id private Long id;
+  @Id private final Long id;
 
   private String name;
 
-  //  @MappedCollection(idColumn = "book_id")
-  //  private Set<UserItem> users = new HashSet<>();
-
   @MappedCollection(idColumn = "book_id")
-  private Set<BookAttr> attrs = new HashSet<>();
+  private Set<BookAttr> attrs;
 
-  //  private String[] tags;
-
-  //  private List<BookPrice> prices;
-  //
-  //  private BookAd ad;
 
   /** 创建时间 */
-  @CreatedDate private LocalDateTime gmtCreate;
+  @CreatedDate private final LocalDateTime gmtCreate;
 
   /** 创建人 */
-  @CreatedBy private Long createdBy;
+  @CreatedBy private final Long createdBy;
 
   /** 最后修改时间 */
-  @LastModifiedDate private LocalDateTime gmtModified;
+  @LastModifiedDate private final LocalDateTime gmtModified;
 
   /** 修改入 */
-  @LastModifiedBy private Long modifiedBy;
+  @LastModifiedBy private final Long modifiedBy;
 
-  @Version private Long version;
+  @Version private final Long version;
 
   @Transient private final transient List<BookEvent> domainEvents = new ArrayList<>();
 
-  public Book(String name) {
+  public static Book create(String name) {
+    Book book = Book.builder().name(name).attrs(new HashSet<>()).build();
+    book.domainEvents.add(new CreateBookEvent(book.getId(), "people_____" + name));
+    return book;
+  }
+
+  public void changeName(String name) {
     this.name = name;
-    this.attrs = new HashSet<>();
-    domainEvents.add(new CreateBookEvent(this.getId(), "people_____" + this.name));
   }
 
-  //  public void changeTags(String... tag){
-  //    this.tags = tag;
-  //  }
 
-  //  public void change(List<BookPrice> prices) {
-  //    this.prices = prices;
-  //  }
 
-  //  public void change(BookAd ad) {
-  //    this.ad = ad;
-  //  }
-
-  //  public void borrow(UserItem user) {
-  //    if (this.users == null) this.users = new HashSet<>();
-  //    this.users.add(user);
-  //  }
-
-  public void addAttr(BookAttr attr) {
+  public void addAttr(Long propId, String name, Set<Long> valueIds) {
     if (this.attrs == null) this.attrs = new HashSet<>();
-    this.attrs.add(attr);
+    this.attrs.add(
+        new BookAttr(
+            null,
+            propId,
+            name,
+            valueIds.stream().map(BookAttrValue::create).collect(Collectors.toSet())));
   }
 
-  public void changeAttr(Set<BookAttr> attrs) {
-    this.attrs = attrs;
+  public void changeAttr(Long attrId, Long propId, String name, Set<Long> valueIds) {
+    this.remove(attrId);
+    this.attrs.add(
+        new BookAttr(
+            attrId,
+            propId,
+            name,
+            valueIds.stream().map(BookAttrValue::create).collect(Collectors.toSet())));
   }
 
-  public void clearAttr() {
-    this.attrs.clear();
+  public void remove(Long... attrIds) {
+    Set<Long> values = Arrays.stream(attrIds).collect(Collectors.toSet());
+    this.attrs.removeIf(item -> values.contains(item.getId()));
   }
 
   @DomainEvents

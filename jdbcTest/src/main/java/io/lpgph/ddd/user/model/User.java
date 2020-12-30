@@ -12,35 +12,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-@EqualsAndHashCode(of = {"id"})
-@NoArgsConstructor
-@Setter
+@Builder
 @Getter
 @Table("jdbc_user")
 public class User {
 
-  @Id
-  private UserId id;
+  @Id private UserId id;
 
   private String name;
 
+  private String[] tags;
+
+  private UserProp prop;
+
+  private UserAddress[] address;
+
   /** 创建时间 */
-  @CreatedDate private LocalDateTime gmtCreate;
+  @CreatedDate private final LocalDateTime gmtCreate;
 
   /** 创建人 */
-  @CreatedBy private Long createdBy;
+  @CreatedBy private final Long createdBy;
 
   /** 最后修改时间 */
-  @LastModifiedDate private LocalDateTime gmtModified;
+  @LastModifiedDate private final LocalDateTime gmtModified;
 
   /** 修改入 */
-  @LastModifiedBy private Long modifiedBy;
+  @LastModifiedBy private final Long modifiedBy;
 
-  @Version private Long version;
+  @Version private final Long version;
 
-  public User(String name) {
-    this.name = name;
-    this.domainEvents.add(new CreateUserEvent("user_____" + this.name));
+  public static User create(String name) {
+    User user = User.builder().name(name).build();
+    user.domainEvents.add(new CreateUserEvent("user_____" + name));
+    return user;
   }
 
   @Transient private final transient List<UserEvent> domainEvents = new ArrayList<>();
@@ -55,5 +59,21 @@ public class User {
   @AfterDomainEventPublication
   private void callbackMethod() {
     domainEvents.clear();
+  }
+
+  public void changeTags(String... tag) {
+    this.tags = tag;
+  }
+
+  public void changeAddress(UserAddress... addresses) {
+    this.address = addresses;
+  }
+
+  public void changeProp(UserProp prop) {
+    this.prop = prop;
+  }
+
+  public void changeName(String name) {
+    this.name = name;
   }
 }

@@ -1,11 +1,12 @@
 package io.lpgph.ddd.common;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-// @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "type")
+//@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "type")
 @Getter
 public abstract class DomainEvent {
 

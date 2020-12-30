@@ -1,12 +1,13 @@
 package io.lpgph.ddd.book.model;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
-@NoArgsConstructor
+@Value
 public class CreateBookEvent extends BookEvent {
-  private String name;
+  String name;
 
   public CreateBookEvent(Long bookId, String name) {
     super(bookId);

@@ -1,18 +1,20 @@
 package io.lpgph.ddd.book.model;
 
 import io.lpgph.ddd.common.DomainEvent;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import io.lpgph.ddd.user.model.UserId;
+import lombok.*;
 
-@Getter
-@Setter
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
 public abstract class BookEvent extends DomainEvent {
 
   private Long bookId;
 
-  public BookEvent(Long bookId) {
-    this.bookId = bookId;
-  }
 }

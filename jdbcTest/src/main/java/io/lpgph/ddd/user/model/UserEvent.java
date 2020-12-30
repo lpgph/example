@@ -1,18 +1,15 @@
 package io.lpgph.ddd.user.model;
 
 import io.lpgph.ddd.common.DomainEvent;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
 public abstract class UserEvent extends DomainEvent {
 
   private UserId userId;
-
-  public UserEvent(UserId userId) {
-    this.userId = userId;
-  }
 }
