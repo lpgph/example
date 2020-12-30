@@ -1,7 +1,9 @@
 package io.lpgph.ddd.book.model;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.*;
 
+//@JsonTypeName(value = "input")
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
