@@ -1,10 +1,6 @@
 package io.lpgph.ddd;
 
-import io.lpgph.ddd.common.DomainEvent;
-import io.lpgph.ddd.event.converter.DomainEventToStringConverter;
-import io.lpgph.ddd.event.converter.StringToDomainEventConverter;
 import io.lpgph.ddd.user.converter.*;
-import io.lpgph.ddd.user.model.CreateUserEvent;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.jdbc.core.convert.JdbcCustomConversions;
@@ -28,12 +24,6 @@ public class JdbcConfig extends AbstractJdbcConfiguration {
   @Override
   public JdbcCustomConversions jdbcCustomConversions() {
     List<Converter<?, ?>> converters = new ArrayList<>();
-
-    converters.add(new DomainEventToStringConverter());
-    converters.add(new StringToDomainEventConverter());
-
-    converters.add(new CreateUserEventToStringConverter());
-    converters.add(new StringToCreateUserEventConverter());
 
     converters.add(new LongToUserIdConverter());
     converters.add(new UserIdToLongConverter());

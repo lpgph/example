@@ -1,12 +1,12 @@
 server:
-  port: 9091
+  port: 8080
   tomcat:
     uri-encoding: UTF-8
 
 
 spring:
   application:
-    name: erp
+    name: test
   main:
     allow-bean-definition-overriding: true
 
@@ -35,8 +35,8 @@ spring:
       ##  Hikari 连接池配置 ------ 详细配置请访问：https://github.com/brettwooldridge/HikariCP
       ## 最小空闲连接数量
       minimum-idle: 5
-#      data-source-properties:
-#        stringtype: unspecified
+      #      data-source-properties:
+      #        stringtype: unspecified
       ## 空闲连接存活最大时间，默认600000（10分钟）
       idle-timeout: 180000
       ## 连接池最大连接数，默认是10

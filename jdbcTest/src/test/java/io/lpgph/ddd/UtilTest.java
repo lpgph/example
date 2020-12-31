@@ -1,6 +1,9 @@
 package io.lpgph.ddd;
 
 import com.hankcs.hanlp.HanLP;
+import io.lpgph.ddd.common.DomainEvent;
+import io.lpgph.ddd.user.model.CreateUserEvent;
+import io.lpgph.ddd.user.model.UserId;
 import io.lpgph.ddd.utils.json.JsonUtil;
 import io.lpgph.ddd.utils.json.TypeReference;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +18,25 @@ import java.util.stream.Collectors;
 public class UtilTest {
 
   @Test
+  void jsonTest2() throws ClassNotFoundException {
+    DomainEvent event = new CreateUserEvent(UserId.create(1L), "ttttt");
+    String jsonStr = JsonUtil.toJson(event);
+    log.info("\njsonStr {}\n", jsonStr);
+    String clsName = event.getClass().getName();
+    log.info("\nclassName {}\n", clsName);
+
+    //    DomainEvent e1 = JsonUtil.fromJson(jsonStr, CreateUserEvent.class);
+    DomainEvent e1 = (DomainEvent) JsonUtil.fromJson(jsonStr, Class.forName(clsName));
+    assert e1 != null;
+    log.info("\ne1\n{}\n", JsonUtil.toJson(e1));
+
+    CreateUserEvent e2 = (CreateUserEvent) JsonUtil.fromJson(jsonStr, Class.forName(clsName));
+    //    CreateUserEvent e2 = JsonUtil.fromJson(jsonStr, CreateUserEvent.class);
+    assert e2 != null;
+    log.info("\ne2\n{}\n", JsonUtil.toJson(e2));
+  }
+
+  @Test
   void test() {
     List<String> sentence =
         List.of("回力官方旗舰店男女鞋2020秋冬潮流休闲跑步鞋网面透气情侣运动鞋", "FreeTie经典帆布鞋 小米休闲鞋子 中帮 低帮 男款 女款 小白鞋");
@@ -24,18 +46,17 @@ public class UtilTest {
         });
   }
 
+  @Test
+  void jsonTest() {
+    String str = "[1,2,3,4,5,3,3,3,6,7,8,9,10,11,1,12]";
+    Set<Integer> ary = JsonUtil.fromJson(str, new TypeReference<>() {});
+    assert ary != null;
+    ary.forEach(item -> log.info("{}", item));
 
-    @Test
-    void jsonTest() {
-        String str = "[1,2,3,4,5,3,3,3,6,7,8,9,10,11,1,12]";
-        Set<Integer> ary = JsonUtil.fromJson(str, new TypeReference<>() {});
-        assert ary != null;
-        ary.forEach(item -> log.info("{}", item));
-
-        LinkedHashSet<Integer> ary2 = JsonUtil.fromJson(str, new TypeReference<>() {});
-        assert ary2 != null;
-        ary2.forEach(item -> log.info("{}", item));
-    }
+    LinkedHashSet<Integer> ary2 = JsonUtil.fromJson(str, new TypeReference<>() {});
+    assert ary2 != null;
+    ary2.forEach(item -> log.info("{}", item));
+  }
 
   @Test
   void streamReduce() {

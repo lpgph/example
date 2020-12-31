@@ -1,7 +1,13 @@
 package io.lpgph.ddd.user.model;
 
-import lombok.Value;
+import lombok.*;
 
+// @ToString
+// @EqualsAndHashCode
+// @NoArgsConstructor(access = AccessLevel.PACKAGE)
+// @Getter
+@NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @Value
 public class UserId {
 

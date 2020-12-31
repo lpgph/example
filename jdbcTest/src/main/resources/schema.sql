@@ -67,7 +67,7 @@ CREATE TABLE `jdbc_event_stored`
     `gmt_create`  datetime                                NOT NULL,
     `gmt_sender`  datetime                                         DEFAULT NULL,
     `event_state` int                                     NOT NULL DEFAULT '0',
-    `type`        varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+    `type`     varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4

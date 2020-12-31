@@ -1,9 +1,8 @@
 package io.lpgph.ddd.event.model;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.lpgph.ddd.common.DomainEvent;
+import io.lpgph.ddd.utils.json.JsonUtil;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -25,11 +24,8 @@ public class EventStored {
 
   private String type;
 
-  @JsonTypeInfo(
-          use = JsonTypeInfo.Id.CLASS,
-          property = "type",
-          include = JsonTypeInfo.As.EXISTING_PROPERTY)
-  private DomainEvent eventBody;
+  @Getter(AccessLevel.PRIVATE)
+  private String eventBody;
 
   private LocalDateTime gmtSender;
 
@@ -38,9 +34,14 @@ public class EventStored {
   public EventStored(DomainEvent event) {
     this.eventId = event.getEventId();
     this.type = event.getClass().getName();
-    this.eventBody = event;
+    this.eventBody = JsonUtil.toJson(event);
     this.gmtCreate = event.getGmtCreate();
     this.status = 0;
+  }
+
+  public DomainEvent getEvent() throws ClassNotFoundException {
+    if (this.eventBody == null || this.eventBody.isEmpty()) return null;
+    return (DomainEvent) JsonUtil.fromJson(this.eventBody, Class.forName(type));
   }
 
   public void changeSuccess() {

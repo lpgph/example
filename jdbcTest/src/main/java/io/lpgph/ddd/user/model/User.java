@@ -1,5 +1,6 @@
 package io.lpgph.ddd.user.model;
 
+import io.lpgph.ddd.common.DomainEvent;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.*;
@@ -47,12 +48,17 @@ public class User {
     return user;
   }
 
-  @Transient private final transient List<UserEvent> domainEvents = new ArrayList<>();
+  @Transient private final transient List<DomainEvent> domainEvents = new ArrayList<>();
 
   @DomainEvents
-  private List<UserEvent> domainEvents() {
+  private List<DomainEvent> domainEvents() {
     log.info("\n\n\n执行领域事件\n\n\n");
-    domainEvents.forEach(userEvent -> userEvent.setUserId(this.id));
+    domainEvents.forEach(
+        event -> {
+          if (event instanceof UserEvent) {
+            ((UserEvent) event).setUserId(this.id);
+          }
+        });
     return domainEvents;
   }
 

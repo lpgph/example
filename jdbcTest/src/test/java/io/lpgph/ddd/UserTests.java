@@ -13,6 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.sql.DataSource;
 import java.io.File;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @SpringBootTest
@@ -69,6 +71,15 @@ class UserTests {
 
   @Test
   void queryEvent() {
-    eventStoredRepository.findAllByStatus(0, 2).forEach(item -> log.info(item.getEventBody().getEventId()));
+    eventStoredRepository
+        .findAllByStatusIn(Set.of(0, 2))
+        .forEach(
+            item -> {
+              try {
+                log.info("\n{}\n", JsonUtil.toJson(item.getEvent()));
+              } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+              }
+            });
   }
 }
