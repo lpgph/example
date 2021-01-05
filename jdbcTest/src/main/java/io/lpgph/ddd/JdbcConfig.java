@@ -11,22 +11,20 @@ import java.util.List;
 
 @Configuration
 public class JdbcConfig extends AbstractJdbcConfiguration {
-  //  @Bean
-  //  SqlSessionFactoryBean sqlSessionFactoryBean() {
-  //    SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-  //    org.apache.ibatis.session.Configuration configuration =
-  //        new org.apache.ibatis.session.Configuration();
-  //    configuration.setLogImpl(Slf4jImpl.class);
-  //    sqlSessionFactoryBean.setConfiguration(configuration);
-  //    return sqlSessionFactoryBean;
-  //  }
+
 
   @Override
   public JdbcCustomConversions jdbcCustomConversions() {
     List<Converter<?, ?>> converters = new ArrayList<>();
 
-    converters.add(new LongToUserIdConverter());
-    converters.add(new UserIdToLongConverter());
+//    converters.add(new LongToPropConverter());
+//    converters.add(new PropToLongConverter());
+//
+//    converters.add(new LongToPropValueConverter());
+//    converters.add(new PropValueToLongConverter());
+
+//    converters.add(new LongToUserIdConverter());
+//    converters.add(new UserIdToLongConverter());
 
     converters.add(new UserPropToStringConverter());
     converters.add(new JsonToUserPropConverter());

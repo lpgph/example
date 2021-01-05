@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.sql.DataSource;
 import java.io.File;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 @Slf4j
@@ -45,7 +45,8 @@ class UserTests {
 
   @Test
   void create() throws InterruptedException {
-    User user = User.create("test");
+    Random random = new Random(System.currentTimeMillis());
+    User user = User.create(UserId.create(random.nextLong()), "test");
     user.changeTags("阳光", "运动", "勇敢");
     user.changeProp(new UserProp(true, 3));
     user.changeAddress(new UserAddress("家", "连云路"), new UserAddress("公司", "平安路"));
@@ -54,9 +55,21 @@ class UserTests {
   }
 
   @Test
+  void query2() {
+    userRepository
+        .findById(UserId.create(38L))
+        .ifPresent(u -> log.info("\n\n\n{}\n\n\n", JsonUtil.toJson(u)));
+  }
+
+  @Test
+  void remove() {
+    userRepository.findById(UserId.create(31L)).ifPresent(u -> userRepository.remove(u));
+  }
+
+  @Test
   void change() {
     userRepository
-        .findById(UserId.create(14L))
+        .findById(UserId.create(38L))
         .ifPresent(
             o -> {
               o.changeName("李四");

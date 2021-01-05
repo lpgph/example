@@ -1,5 +1,6 @@
 package io.lpgph.ddd;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -7,10 +8,11 @@ import org.springframework.data.jdbc.repository.config.EnableJdbcAuditing;
 
 import java.util.Optional;
 
-//@Import(MyBatisJdbcConfiguration.class)
+@Slf4j
 @EnableJdbcAuditing
 @Configuration
 public class AuditorConfig {
+
 
   @Bean
   public AuditorAware<Long> auditorProvider() {

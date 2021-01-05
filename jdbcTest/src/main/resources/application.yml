@@ -68,7 +68,8 @@ logging:
     com.dshui: INFO
     cc.dshui: INFO
     com.iit: INFO
-
+#mybatis:
+#  config-location: mybatis-config.xml
 #mybatis:
 #  #  mapper-locations: classpath:com/iit/**/mapper/**.xml,classpath:com/dshui/**/**.xml
 #  type-handlers-package:

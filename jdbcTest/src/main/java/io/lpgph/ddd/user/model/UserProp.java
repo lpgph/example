@@ -1,16 +1,14 @@
 package io.lpgph.ddd.user.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /** 产品属性 */
-@NoArgsConstructor
+@NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-@Getter
+@Value
 public class UserProp {
 
-  private Boolean isVip;
+  Boolean isVip;
 
-  private Integer level;
+  Integer level;
 }

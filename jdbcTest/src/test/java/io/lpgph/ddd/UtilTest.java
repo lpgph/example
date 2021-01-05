@@ -10,12 +10,63 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalField;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
 @SpringBootTest
 public class UtilTest {
+
+  public List<Integer> getDistinctRandom(int minNum, int maxMum, int numRange) {
+    if (numRange <= 0 || numRange > (maxMum - minNum + 1) || maxMum - minNum < 0) {
+      System.out.println("传入数字不正确");
+      return null;
+    }
+    // 返回的结果集合
+    List<Integer> result = new ArrayList<>();
+    // 过滤的数据集合最小数到最大数的数字集合
+    List<Integer> list = new ArrayList<>();
+    for (int i = minNum; i < maxMum + 1; i++) {
+      list.add(i);
+    }
+    // 取出不重复的随机数
+    int forNum = 0;
+    for (int i = 0; i < numRange; i++) {
+      int num = new Random().nextInt(list.size());
+      result.add(list.remove(num));
+      ++forNum;
+    }
+    return result;
+  }
+
+  @Test
+  void genId2() {
+    Random random = new Random(System.currentTimeMillis());
+    for (int i = 0; i < 50; i++) {
+      //      log.info("{}", getDistinctRandom(1000, 100000, 1).get(0));
+      log.info("{}", random.nextInt(100000));
+    }
+  }
+
+  @Test
+  void genId() {
+    log.info("{}", System.currentTimeMillis());
+    log.info("{}", Instant.now().toEpochMilli());
+    log.info("{}", Instant.now().getEpochSecond());
+    log.info("{}", LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli());
+    log.info("{}", LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8")));
+    String millis = String.valueOf(System.currentTimeMillis());
+    log.info(millis.substring(4));
+    log.info("{}", LocalDateTime.now().getNano());
+    log.info("{}", LocalDateTime.now().getLong(ChronoField.MILLI_OF_DAY));
+    log.info("{}", LocalDateTime.now().getLong(ChronoField.SECOND_OF_DAY));
+    log.info("{}", LocalDateTime.now().getLong(ChronoField.MICRO_OF_SECOND));
+  }
 
   @Test
   void jsonTest2() throws ClassNotFoundException {
