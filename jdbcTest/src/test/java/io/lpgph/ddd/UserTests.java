@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.sql.DataSource;
 import java.io.File;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -57,19 +58,27 @@ class UserTests {
   @Test
   void query2() {
     userRepository
-        .findById(UserId.create(38L))
+        .findByUserId(UserId.create(38L))
         .ifPresent(u -> log.info("\n\n\n{}\n\n\n", JsonUtil.toJson(u)));
   }
 
   @Test
+  void query3() {
+    List<User> list = userRepository.findAllByProp(new UserProp(true, 4));
+    log.info("\n\n\n{}\n\n\n", JsonUtil.toJson(list));
+  }
+
+  @Test
   void remove() {
-    userRepository.findById(UserId.create(31L)).ifPresent(u -> userRepository.remove(u));
+    userRepository
+        .findByUserId(UserId.create(38L))
+        .ifPresent(u -> userRepository.remove(u));
   }
 
   @Test
   void change() {
     userRepository
-        .findById(UserId.create(38L))
+        .findByUserId(UserId.create(38L))
         .ifPresent(
             o -> {
               o.changeName("李四");

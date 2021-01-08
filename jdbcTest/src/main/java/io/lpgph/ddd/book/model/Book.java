@@ -1,43 +1,74 @@
 package io.lpgph.ddd.book.model;
 
 import io.lpgph.ddd.common.DomainEvent;
-import io.lpgph.ddd.common.domain.AggregateRoot;
+import io.lpgph.ddd.common.StateEnum;
 import lombok.*;
 import org.springframework.data.annotation.*;
+import org.springframework.data.convert.WritingConverter;
 import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.data.domain.DomainEvents;
-import org.springframework.data.relational.core.mapping.Embedded;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.util.Assert;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 /** 产品属性 */
-@EqualsAndHashCode(callSuper = false, of = "name")
+@EqualsAndHashCode(of = "id")
 @Getter
 @Builder
 @Table("jdbc_book")
-public class Book extends AggregateRoot {
+public class Book {
 
-  @Embedded(prefix = "book_", onEmpty = Embedded.OnEmpty.USE_NULL)
-  private BookId bookId;
+  @Id private final Long id;
+  //  private BookId id;
 
   private String name;
+
+  //  @Column("is_deleted")
+  private StateEnum state;
 
   @MappedCollection(idColumn = "book_id")
   private Set<BookAttr> attrs;
 
+  /** 创建时间 */
+  @CreatedDate private LocalDateTime gmtCreate;
+
+  /** 创建人 */
+  @CreatedBy private Long createdBy;
+
+  /** 最后修改时间 */
+  @LastModifiedDate private LocalDateTime gmtModified;
+
+  /** 修改入 */
+  @LastModifiedBy private Long modifiedBy;
+
+  @Version private Long version;
+
   public static Book create(String name) {
-    Book book = Book.builder().name(name).attrs(new HashSet<>()).build();
+    Book book = Book.builder().name(name).state(StateEnum.ACTIVATED).attrs(new HashSet<>()).build();
     book.registerEvent(new CreateBookEvent(book.getId(), "people_____" + name));
     return book;
   }
 
-  public static Book create(BookId bookId, String name) {
-    Book book = Book.builder().bookId(bookId).name(name).attrs(new HashSet<>()).build();
-    book.registerEvent(new CreateBookEvent(book.getId(), "people_____" + name));
-    return book;
+  private final transient @Transient List<DomainEvent> domainEvents = new ArrayList<>();
+
+  protected void registerEvent(DomainEvent event) {
+    Assert.notNull(event, "Domain event must not be null!");
+    this.domainEvents.add(event);
+  }
+
+  @DomainEvents
+  protected Collection<DomainEvent> domainEvents() {
+    return Collections.unmodifiableList(domainEvents);
+  }
+
+  @AfterDomainEventPublication
+  protected void clearDomainEvents() {
+    domainEvents.clear();
   }
 
   public void changeName(String name) {
@@ -48,11 +79,12 @@ public class Book extends AggregateRoot {
     if (this.attrs == null) this.attrs = new HashSet<>();
     this.attrs.add(
         new BookAttr(
-            new PropId(propId),
+            propId,
+            //            new PropId(propId),
             name,
             valueIds.stream()
-                .map(PropValueId::new)
-                .map(BookAttrValue::create)
+                //                .map(PropValueId::new)
+                .map(BookAttrValue::new)
                 .collect(Collectors.toSet())));
   }
 
@@ -60,17 +92,26 @@ public class Book extends AggregateRoot {
     this.remove(propId);
     this.attrs.add(
         new BookAttr(
-            new PropId(propId),
+            propId,
+            //            new PropId(propId),
             name,
             valueIds.stream()
-                .map(PropValueId::new)
-                .map(BookAttrValue::create)
+                //                .map(PropValueId::new)
+                .map(BookAttrValue::new)
                 .collect(Collectors.toSet())));
   }
 
   public void remove(Long... propIds) {
     Set<Long> values = Arrays.stream(propIds).collect(Collectors.toSet());
-    this.attrs.removeIf(item -> values.contains(item.getPropId().getId()));
+    this.attrs.removeIf(item -> values.contains(item.getPropId()));
+  }
+
+  public void deactivated() {
+    //    this.state = StateEnum.DEACTIVATED;
+  }
+
+  public void activated() {
+    //    this.state = StateEnum.ACTIVATED;
   }
 
   //  @Transient private final transient List<BookEvent> domainEvents = new ArrayList<>();

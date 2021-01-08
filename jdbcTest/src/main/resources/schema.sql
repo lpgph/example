@@ -28,6 +28,23 @@ CREATE TABLE `jdbc_book`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci;
 
+
+CREATE TABLE `jdbc_book_auditor`
+(
+    `id`          bigint   NOT NULL AUTO_INCREMENT,
+    `book_id`     bigint   not NULL,
+    `event_type`  tinyint  not NULL default 0,
+    `old_value`   json     NULL     default null,
+    `new_value`   json     NULL     default null,
+    `user_id`     bigint   not NULL,
+    `create_date` datetime not NULL,
+    PRIMARY KEY (`id`),
+    INDEX idx_book (`book_id`, `create_date`),
+    INDEX idx_user (`user_id`, `create_date`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci;
+
 CREATE TABLE `jdbc_book_attr`
 (
     `id`      bigint NOT NULL AUTO_INCREMENT,

@@ -16,4 +16,13 @@ public class UserId {
   public static UserId create(Long id) {
     return new UserId(id);
   }
+
+  UserId withId( Long id){
+    return UserId.create(id);
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(id);
+  }
 }

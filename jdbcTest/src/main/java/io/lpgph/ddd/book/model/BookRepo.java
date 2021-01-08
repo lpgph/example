@@ -8,8 +8,6 @@ public interface BookRepo extends CrudRepository<Book, Long> {
 
   List<Book> findAllByNameLike(String name);
 
-  @Query("select * from Book where name like concat(:name, '%')")
+  @Query("select * from jdbc_book  where name like concat( '%',:name, '%')")
   List<Book> listAllByName(String name);
-
-
 }

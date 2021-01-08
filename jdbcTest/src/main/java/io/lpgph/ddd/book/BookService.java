@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Random;
 import java.util.Set;
 
 @Slf4j
@@ -17,6 +18,7 @@ public class BookService {
 
   @Transactional
   public void create() {
+    Random random = new Random(System.currentTimeMillis());
     Book book = Book.create("<飘333>");
     Book newBook = bookRepo.save(book);
     log.info("\n\nbook\n{}\nnewBook\n{}\n\n", JsonUtil.toJson(book), JsonUtil.toJson(newBook));
