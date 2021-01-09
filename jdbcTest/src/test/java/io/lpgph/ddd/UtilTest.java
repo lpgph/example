@@ -22,6 +22,20 @@ import java.util.stream.Collectors;
 @SpringBootTest
 public class UtilTest {
 
+  @Test
+  public void testAry() {
+    Set<Cat> cats = new HashSet<>();
+    Collections.addAll(cats, new Cat(1, "aaaa"), new Cat(2, "bbbb"), new Cat(3, "cccc"));
+    log.info("\n\n{}\n\n", JsonUtil.toJson(cats));
+    Cat c2 =
+        cats.stream()
+            .filter(item -> item.getId().equals(2))
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException(""));
+    c2.change("张三");
+    log.info("\n\n{}\n\n", JsonUtil.toJson(cats));
+  }
+
   public List<Integer> getDistinctRandom(int minNum, int maxMum, int numRange) {
     if (numRange <= 0 || numRange > (maxMum - minNum + 1) || maxMum - minNum < 0) {
       System.out.println("传入数字不正确");
