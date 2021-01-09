@@ -31,9 +31,7 @@ class BookTests {
 
   @Test
   void query2() {
-    bookRepo
-        .findById(28L)
-        .ifPresent(u -> log.info("\n\n\n{}\n\n\n", JsonUtil.toJson(u)));
+    bookRepo.findById(28L).ifPresent(u -> log.info("\n\n\n{}\n\n\n", JsonUtil.toJson(u)));
   }
 
   @Test
@@ -50,6 +48,11 @@ class BookTests {
 
     //    book.borrow(UserItem.create(1L));
     bookRepo.save(book);
+  }
+
+  @Test
+  void remove2() {
+    bookRepo.findById(37L).ifPresent(u -> bookRepo.delete(u));
   }
 
   @Test

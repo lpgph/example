@@ -1,38 +1,45 @@
 package io.lpgph.ddd.book.model;
 
+import lombok.Builder;
 import lombok.Getter;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
 @Table("jdbc_book_auditor")
+@Builder
 @Getter
 public class BookAuditor {
 
+  @Id
   private Long id;
-  private final Long bookId;
+
+  private Long bookId;
 
   // save delete update
-  private final EventTypeEnum eventType;
+  private EventTypeEnum eventType;
 
-  private final String oldValue;
-  private final String newValue;
+  private String oldValue;
+  private String newValue;
 
-  private final Long userId;
-  private final LocalDateTime createDate;
+  private Long userId;
+  private LocalDateTime createDate;
 
-  public BookAuditor(
+  public static BookAuditor create(
       Long bookId,
       EventTypeEnum eventType,
       String oldValue,
       String newValue,
       Long userId,
       LocalDateTime createDate) {
-    this.bookId = bookId;
-    this.eventType = eventType;
-    this.oldValue = oldValue;
-    this.newValue = newValue;
-    this.userId = userId;
-    this.createDate = createDate;
+    return BookAuditor.builder()
+        .bookId(bookId)
+        .eventType(eventType)
+        .oldValue(oldValue)
+        .newValue(newValue)
+        .userId(userId)
+        .createDate(createDate)
+        .build();
   }
 }

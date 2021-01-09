@@ -11,7 +11,8 @@ import org.springframework.data.convert.ReadingConverter;
 public class IntegerToEventTypeConverter implements Converter<Integer, EventTypeEnum> {
   @Override
   public EventTypeEnum convert(Integer source) {
-    log.info("ttttttttttttttttttttttttttt");
+    log.info("IntegerToEventTypeConverter ");
     return EventTypeEnum.resolve(source);
   }
 }
+

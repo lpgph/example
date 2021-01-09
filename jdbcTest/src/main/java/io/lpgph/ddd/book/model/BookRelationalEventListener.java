@@ -1,19 +1,18 @@
 package io.lpgph.ddd.book.model;
 
 import io.lpgph.ddd.utils.json.JsonUtil;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.relational.core.mapping.event.*;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class BookSaveListener extends AbstractRelationalEventListener<Book> {
+public class BookRelationalEventListener extends AbstractRelationalEventListener<Book> {
 
   private final BookAuditorRepo bookAuditorRepo;
   private final BookRepo bookRepo;
 
-  public BookSaveListener(BookAuditorRepo bookAuditorRepo, BookRepo bookRepo) {
+  public BookRelationalEventListener(BookAuditorRepo bookAuditorRepo, BookRepo bookRepo) {
     this.bookAuditorRepo = bookAuditorRepo;
     this.bookRepo = bookRepo;
   }
@@ -29,6 +28,7 @@ public class BookSaveListener extends AbstractRelationalEventListener<Book> {
     if (book2.getId() == null) {
       isNew = true;
     } else {
+      // 针对自定义ID
       bookRepo.findById(book2.getId()).ifPresent(o -> isNew = false);
     }
   }
@@ -41,7 +41,7 @@ public class BookSaveListener extends AbstractRelationalEventListener<Book> {
     Book book = event.getEntity();
     log.info("\n\n{}\n\n{}\n\n\n\n", JsonUtil.toJson(book2), JsonUtil.toJson(book));
     bookAuditorRepo.save(
-        new BookAuditor(
+        BookAuditor.create(
             book.getId(),
             isNew ? EventTypeEnum.SAVE : EventTypeEnum.UPDATE,
             JsonUtil.toJson(book2),
@@ -53,12 +53,24 @@ public class BookSaveListener extends AbstractRelationalEventListener<Book> {
   @Override
   protected void onAfterDelete(AfterDeleteEvent<Book> event) {
     super.onAfterDelete(event);
+    if (event.getEntity() == null) return;
+    book2 = event.getEntity();
+    //    log.info("\n\n\nonAfterDelete \n{}\n\n\n\n", JsonUtil.toJson(book2));
   }
 
   @Override
   protected void onBeforeDelete(BeforeDeleteEvent<Book> event) {
     super.onBeforeDelete(event);
+    if (event.getEntity() == null) return;
     Book book = event.getEntity();
-    log.info("\n\n\nonBeforeSave \n{}\n\n\n\n", JsonUtil.toJson(book));
+    //    log.info("\n\n\nonBeforeSave \n{}\n\n\n\n", JsonUtil.toJson(book));
+    bookAuditorRepo.save(
+        BookAuditor.create(
+            book.getId(),
+            EventTypeEnum.DELETE,
+            JsonUtil.toJson(book2),
+            JsonUtil.toJson(book),
+            book.getModifiedBy(),
+            book.getGmtModified()));
   }
 }
