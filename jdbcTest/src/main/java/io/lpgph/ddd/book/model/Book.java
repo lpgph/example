@@ -69,6 +69,10 @@ public class Book {
     domainEvents.clear();
   }
 
+  public void remove() {
+    this.registerEvent(new RemoveBookEvent(this.id));
+  }
+
   public void changeName(String name) {
     this.name = name;
   }

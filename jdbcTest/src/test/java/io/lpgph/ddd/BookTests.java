@@ -52,7 +52,13 @@ class BookTests {
 
   @Test
   void remove2() {
-    bookRepo.findById(37L).ifPresent(u -> bookRepo.delete(u));
+    bookRepo
+        .findById(40L)
+        .ifPresent(
+            u -> {
+              u.remove();
+              bookRepo.delete(u);
+            });
   }
 
   @Test
