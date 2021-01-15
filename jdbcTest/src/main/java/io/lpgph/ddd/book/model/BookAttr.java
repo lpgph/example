@@ -1,6 +1,6 @@
 package io.lpgph.ddd.book.model;
 
-import io.lpgph.ddd.common.domain.Identified;
+import io.lpgph.ddd.common.domain.AbstractValueObject;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -15,7 +15,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = false)
 @Value
 @Table("jdbc_book_attr")
-public class BookAttr extends Identified {
+public class BookAttr extends AbstractValueObject {
 
   //  @Embedded(prefix = "prop_", onEmpty = Embedded.OnEmpty.USE_NULL)
   // PropId propId;

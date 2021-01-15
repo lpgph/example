@@ -14,7 +14,6 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoField;
-import java.time.temporal.TemporalField;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,14 +24,14 @@ public class UtilTest {
   @Test
   public void testAry() {
     Set<Cat> cats = new HashSet<>();
-    Collections.addAll(cats, new Cat(1, "aaaa"), new Cat(2, "bbbb"), new Cat(3, "cccc"));
+    Collections.addAll(cats, new Cat(1, "aaaa"), new Cat(2, "bbbb"), new Cat(3, "cccc"), new Cat(4, "aaaa"));
     log.info("\n\n{}\n\n", JsonUtil.toJson(cats));
     Cat c2 =
         cats.stream()
             .filter(item -> item.getId().equals(2))
             .findFirst()
             .orElseThrow(() -> new RuntimeException(""));
-    c2.change("张三");
+    c2.change("cccc");
     log.info("\n\n{}\n\n", JsonUtil.toJson(cats));
   }
 

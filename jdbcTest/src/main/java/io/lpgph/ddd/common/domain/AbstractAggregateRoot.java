@@ -1,11 +1,13 @@
 package io.lpgph.ddd.common.domain;
 
-import com.mysema.commons.lang.Assert;
-import io.lpgph.ddd.common.DomainEvent;
-import lombok.*;
+import io.lpgph.ddd.common.StateEnum;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.*;
 import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.data.domain.DomainEvents;
+import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,10 +15,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-/** @see org.springframework.data.domain.AbstractAggregateRoot */
+/**
+ * 聚合对象 基类
+ *
+ * @see org.springframework.data.domain.AbstractAggregateRoot
+ */
 @Setter(value = AccessLevel.PROTECTED)
-@Getter(value = AccessLevel.PROTECTED)
-public abstract class AggregateRoot extends Identified {
+@Getter
+public abstract class AbstractAggregateRoot {
+
+  /* 启用状态 */
+  private StateEnum state;
 
   /** 创建时间 */
   @CreatedDate private LocalDateTime gmtCreate;
@@ -30,10 +39,10 @@ public abstract class AggregateRoot extends Identified {
   /** 修改入 */
   @LastModifiedBy private Long modifiedBy;
 
+  /** 乐观锁 */
   @Version private Long version;
 
-  private final transient @Transient
-  List<DomainEvent> domainEvents = new ArrayList<>();
+  private final transient @Transient List<DomainEvent> domainEvents = new ArrayList<>();
 
   protected void registerEvent(DomainEvent event) {
     Assert.notNull(event, "Domain event must not be null!");
@@ -48,5 +57,13 @@ public abstract class AggregateRoot extends Identified {
   @AfterDomainEventPublication
   protected void clearDomainEvents() {
     domainEvents.clear();
+  }
+
+  public void deactivated() {
+    this.state = StateEnum.DEACTIVATED;
+  }
+
+  public void activated() {
+    this.state = StateEnum.ACTIVATED;
   }
 }
