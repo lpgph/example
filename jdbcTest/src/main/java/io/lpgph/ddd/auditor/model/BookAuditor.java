@@ -1,5 +1,6 @@
-package io.lpgph.ddd.book.model;
+package io.lpgph.ddd.auditor.model;
 
+import io.lpgph.ddd.book.constant.e.EventTypeEnum;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;

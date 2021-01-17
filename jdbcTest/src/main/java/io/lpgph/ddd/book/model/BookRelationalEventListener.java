@@ -1,5 +1,8 @@
 package io.lpgph.ddd.book.model;
 
+import io.lpgph.ddd.auditor.model.BookAuditor;
+import io.lpgph.ddd.auditor.model.BookAuditorRepo;
+import io.lpgph.ddd.book.constant.e.EventTypeEnum;
 import io.lpgph.ddd.utils.json.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.relational.core.mapping.event.*;

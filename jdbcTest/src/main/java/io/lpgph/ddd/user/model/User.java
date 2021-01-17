@@ -1,7 +1,6 @@
 package io.lpgph.ddd.user.model;
 
 import io.lpgph.ddd.common.DomainEvent;
-import io.lpgph.ddd.common.domain.AggregateRoot;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.*;
@@ -18,7 +17,7 @@ import java.util.List;
 @Builder
 @Getter
 @Table("jdbc_user")
-public class User extends AggregateRoot {
+public class User{
 
   @Embedded(prefix = "user_", onEmpty = Embedded.OnEmpty.USE_NULL)
   private UserId userId;
@@ -33,7 +32,7 @@ public class User extends AggregateRoot {
 
   public static User create(UserId userId, String name) {
     User user = User.builder().userId(userId).name(name).build();
-    user.registerEvent(new CreateUserEvent("user_____" + name));
+    //    user.registerEvent(new CreateUserEvent("user_____" + name));
     return user;
   }
   //

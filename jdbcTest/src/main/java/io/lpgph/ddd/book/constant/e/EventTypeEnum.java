@@ -1,4 +1,4 @@
-package io.lpgph.ddd.book.model;
+package io.lpgph.ddd.book.constant.e;
 
 
 import io.lpgph.ddd.common.BaseEnum;

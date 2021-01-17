@@ -1,4 +1,4 @@
-package io.lpgph.ddd.book.model;
+package io.lpgph.ddd.auditor.model;
 
 import org.springframework.data.repository.CrudRepository;
 
