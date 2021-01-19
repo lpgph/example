@@ -4,12 +4,17 @@ import io.lpgph.ddd.book.event.CreateBookEvent;
 import io.lpgph.ddd.book.event.RemoveBookEvent;
 import io.lpgph.ddd.common.StateEnum;
 import io.lpgph.ddd.common.domain.AbstractAggregateRoot;
+import io.lpgph.ddd.common.domain.DomainEvent;
 import lombok.*;
 import org.springframework.data.annotation.*;
+import org.springframework.data.domain.AfterDomainEventPublication;
+import org.springframework.data.domain.DomainEvents;
 import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.util.Assert;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,7 +23,7 @@ import java.util.stream.Collectors;
 @Getter
 @Builder
 @Table("jdbc_book")
-public class Book extends AbstractAggregateRoot {
+public class Book {
 
   @Id private final Long id;
   //  private BookId id;
@@ -31,9 +36,45 @@ public class Book extends AbstractAggregateRoot {
   @MappedCollection(idColumn = "book_id")
   private Set<BookAttr> attrs;
 
+  /* 启用状态 */
+  private StateEnum state;
+
+  /** 创建时间 */
+  @CreatedDate private LocalDateTime gmtCreate;
+
+  /** 创建人 */
+  @CreatedBy private Long createdBy;
+
+  /** 最后修改时间 */
+  @LastModifiedDate private LocalDateTime gmtModified;
+
+  /** 修改入 */
+  @LastModifiedBy private Long modifiedBy;
+
+  /** 乐观锁 */
+  @Version private Long version;
+
+  private final transient @Transient List<DomainEvent> domainEvents = new ArrayList<>();
+
+  protected void registerEvent(DomainEvent event) {
+    Assert.notNull(event, "Domain event must not be null!");
+    this.domainEvents.add(event);
+  }
+
+  @DomainEvents
+  protected Collection<DomainEvent> domainEvents() {
+    return Collections.unmodifiableList(domainEvents);
+  }
+
+  @AfterDomainEventPublication
+  protected void clearDomainEvents() {
+    domainEvents.clear();
+  }
+
   public static Book create(String name) {
     Book book = Book.builder().name(name).attrs(new HashSet<>()).build();
-    book.setState(StateEnum.ACTIVATED);
+    //    book.setState(StateEnum.ACTIVATED);
+    book.activated();
     book.registerEvent(new CreateBookEvent(book.getId(), "people_____" + name));
     return book;
   }
@@ -82,11 +123,13 @@ public class Book extends AbstractAggregateRoot {
   }
 
   public void deactivated() {
-    this.setState(StateEnum.DEACTIVATED);
+    //    this.setState(StateEnum.DEACTIVATED);
+    this.state = StateEnum.DEACTIVATED;
   }
 
   public void activated() {
-    this.setState(StateEnum.ACTIVATED);
+    //    this.setState(StateEnum.ACTIVATED);
+    this.state = StateEnum.ACTIVATED;
   }
 
   //  @Transient private final transient List<BookEvent> domainEvents = new ArrayList<>();

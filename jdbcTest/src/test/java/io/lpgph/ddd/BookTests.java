@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Slf4j
@@ -42,6 +43,12 @@ class BookTests {
     //    book.changeTags("book", "hhh");
     book.addAttr(1L, "1_属性1", Set.of(1L, 2L, 3L));
     book.addAttr(2L, "1_属性2", Set.of(3L));
+
+    book.changeInfo(
+        new BookInfo(
+            "test",
+            Monetary.create(new BigDecimal("255.5")),
+            Set.of(Tag.create("营销"), Tag.create("商业"))));
     //
     //    book.change(new BookAd(true, false));
     //    book.change(List.of(new BookPrice(1, 100L), new BookPrice(2, 200L)));
