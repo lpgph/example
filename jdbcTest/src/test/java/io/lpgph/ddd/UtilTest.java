@@ -13,18 +13,26 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
-@SpringBootTest
 public class UtilTest {
+
+  @Test
+  public void dateTest() {
+    String date = "2010-02-13 15:13:12";
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    log.info(LocalDateTime.parse(date, formatter).format(formatter));
+  }
 
   @Test
   public void testAry() {
     Set<Cat> cats = new HashSet<>();
-    Collections.addAll(cats, new Cat(1, "aaaa"), new Cat(2, "bbbb"), new Cat(3, "cccc"), new Cat(4, "aaaa"));
+    Collections.addAll(
+        cats, new Cat(1, "aaaa"), new Cat(2, "bbbb"), new Cat(3, "cccc"), new Cat(4, "aaaa"));
     log.info("\n\n{}\n\n", JsonUtil.toJson(cats));
     Cat c2 =
         cats.stream()
