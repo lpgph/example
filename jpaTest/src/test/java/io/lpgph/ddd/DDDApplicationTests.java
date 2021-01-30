@@ -40,20 +40,15 @@ class DDDApplicationTests {
 
   @Test
   void create() {
-    People people = new People("张三");
-    People savePeople = peopleRepo.save(people);
-    Book book = new Book("<围城>");
-    book.borrow(savePeople.getId());
-    bookRepo.save(book);
-  }
-
-  @Test
-  void deleteTest() {
-    peopleRepo.deleteById(1L);
+//    People people = new People("张三");
+//    People savePeople = peopleRepo.save(people);
+//    Book book = new Book("<围城>");
+//    book.borrow(savePeople.getId());
+//    bookRepo.save(book);
   }
 
   @Test
   void queryTest() {
-    log.info(JsonUtil.toJson(peopleQueryServer.query()));
+//    log.info(JsonUtil.toJson(peopleQueryServer.query()));
   }
 }

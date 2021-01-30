@@ -10,21 +10,15 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@EqualsAndHashCode(of = {"id"})
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@Builder
 @Entity
-//@SQLDelete(sql = "update people set is_deleted=true where id=? and version=?")
-//@Where(clause = "is_deleted=false")
 @EntityListeners(AuditingEntityListener.class)
 public class People {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-
-  //  @EmbeddedId private PeopleId id;
+  @EmbeddedId private PeopleId id;
 
   private String name;
 
@@ -42,11 +36,11 @@ public class People {
 
   @Version private Long version;
 
-  @Column(name = "is_deleted", nullable = false)
-  private Boolean deleted;
+  public static People create(PeopleId peopleId, String name) {
+    return People.builder().id(peopleId).name(name).build();
+  }
 
-  public People(String name) {
-    this.name = name;
-    this.deleted = false;
+  public void changeName(String newName) {
+    this.name = newName;
   }
 }
