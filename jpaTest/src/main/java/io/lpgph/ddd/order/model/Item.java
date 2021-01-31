@@ -6,14 +6,15 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 // 此处表示值对象 使用 @Value 注解更恰当 但是jpa 不支持
+@EqualsAndHashCode
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(force = true, access = AccessLevel.PROTECTED)
 @Embeddable
 public class Item implements Serializable {
 
-  Long goodsId;
-  Integer quantity;
+  private Long goodsId;
+  private Integer quantity;
 
   public static Item create(Long goodsId, Integer quantity) {
     return new Item(goodsId, quantity);

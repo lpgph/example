@@ -1,15 +1,9 @@
 package io.lpgph.ddd.people.representation;
 
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import io.lpgph.ddd.book.model.QBook;
-import io.lpgph.ddd.book.model.QPeopleItem;
-import io.lpgph.ddd.people.model.QPeople;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import java.util.List;
 
 @Service
 public class PeopleQueryServer {

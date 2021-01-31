@@ -2,12 +2,14 @@ package io.lpgph.ddd.people.persistence;
 
 import io.lpgph.ddd.people.model.People;
 import io.lpgph.ddd.people.model.PeopleId;
+import io.lpgph.ddd.people.model.PeopleRepo;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.Optional;
 
 @Repository
-public class PeopleRepoImpl {
+public class PeopleRepoImpl implements PeopleRepo {
   private final EntityManager em;
 
   public PeopleRepoImpl(EntityManager em) {
@@ -23,7 +25,7 @@ public class PeopleRepoImpl {
     em.flush();
   }
 
-  public People findById(PeopleId peopleId) {
+  public Optional<People> findById(PeopleId peopleId) {
     return em.find(People.class, peopleId.getId());
   }
 }

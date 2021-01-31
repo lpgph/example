@@ -1,7 +1,6 @@
 package io.lpgph.ddd.user.persistence.jpa;
 
 import io.lpgph.ddd.common.StateEnum;
-import io.lpgph.ddd.user.model.CreateUserEvent;
 import io.lpgph.ddd.user.model.User;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,7 +11,6 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;

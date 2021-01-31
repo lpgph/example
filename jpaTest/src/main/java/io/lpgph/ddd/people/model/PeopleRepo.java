@@ -1,11 +1,12 @@
 package io.lpgph.ddd.people.model;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.repository.Repository;
 
-public interface PeopleRepo extends JpaRepository<People, PeopleId> {
+import java.util.Optional;
 
+public interface PeopleRepo extends Repository<People, PeopleId> {
+  // public interface PeopleRepo extends JpaRepository<People, PeopleId> {
+  People save(People p);
+
+  Optional<People> findById(PeopleId id);
 }

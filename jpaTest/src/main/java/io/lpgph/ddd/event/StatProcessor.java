@@ -1,8 +1,8 @@
 package io.lpgph.ddd.event;
 
+import io.lpgph.ddd.common.AbstractDomainEvent;
 import io.lpgph.ddd.event.model.EventStored;
 import io.lpgph.ddd.event.model.EventStoredDao;
-import io.lpgph.ddd.user.model.UserEvent;
 import io.lpgph.ddd.utils.json.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -21,7 +21,7 @@ public class StatProcessor {
 
   @Async
   @TransactionalEventListener
-  public void handleAfterPersonSavedComplete(UserEvent event) {
+  public void handleAfterPersonSavedComplete(AbstractDomainEvent event) {
     log.info("\n\n\n\n事件监听  {}\n\n\n\n\n", JsonUtil.toJson(event));
     eventStoredDao.save(new EventStored(event));
   }

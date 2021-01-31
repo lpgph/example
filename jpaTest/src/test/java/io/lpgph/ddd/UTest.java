@@ -2,7 +2,7 @@ package io.lpgph.ddd;
 
 import io.lpgph.ddd.order.model.Item;
 import io.lpgph.ddd.order.model.Order;
-import io.lpgph.ddd.order.model.OrderRepo;
+import io.lpgph.ddd.order.model.OrderRepository;
 import io.lpgph.ddd.people.model.PeopleId;
 import io.lpgph.ddd.people.model.PeopleRepo;
 import io.lpgph.ddd.people.model.People;
@@ -23,7 +23,7 @@ public class UTest {
 
   @Autowired private ShopCardRepo shopCardRepo;
 
-  @Autowired private OrderRepo orderRepo;
+  @Autowired private OrderRepository orderRepo;
 
   @Test
   void orderSave() {
@@ -59,7 +59,7 @@ public class UTest {
 
   @Test
   public void save() {
-    peopleRepo.save(People.create(PeopleId.create(2L), "test"));
+    peopleRepo.save(People.create(PeopleId.create(3L), "test2"));
   }
 
   @Test
@@ -68,8 +68,8 @@ public class UTest {
         .findById(PeopleId.create(2L))
         .ifPresent(
             o -> {
-              o.changeName("张三");
-              peopleRepo.saveAndFlush(o);
+              o.changeName("张三222");
+              peopleRepo.save(o);
             });
   }
 }

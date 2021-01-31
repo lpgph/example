@@ -1,6 +1,6 @@
 package io.lpgph.ddd.book.model;
 
-import io.lpgph.ddd.common.AbstractDomainEvent2;
+import io.lpgph.ddd.common.AbstractDomainEvent;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class BookEvent extends AbstractDomainEvent2 {
+public abstract class BookEvent extends AbstractDomainEvent {
 
   private Long bookId;
 
