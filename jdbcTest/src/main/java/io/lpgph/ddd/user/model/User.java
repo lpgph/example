@@ -1,23 +1,15 @@
 package io.lpgph.ddd.user.model;
 
-import io.lpgph.ddd.common.DomainEvent;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.annotation.*;
-import org.springframework.data.domain.AfterDomainEventPublication;
-import org.springframework.data.domain.DomainEvents;
 import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.Table;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Builder
 @Getter
 @Table("jdbc_user")
-public class User{
+public class User {
 
   @Embedded(prefix = "user_", onEmpty = Embedded.OnEmpty.USE_NULL)
   private UserId userId;
