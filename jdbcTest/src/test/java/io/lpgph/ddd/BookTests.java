@@ -30,6 +30,35 @@ class BookTests {
     }
   }
 
+
+  @Test
+  void query1() {
+    //    List<Book> bookList = bookRepo.findAllByNameLike("%飘%");
+    List<Book> bookList = bookRepo.listAllByInfo("test");
+    if (bookList != null) {
+      log.info("\n\n\n{}", bookList.size());
+      bookList.forEach(b -> log.info("{}", JsonUtil.toJson(b)));
+      log.info("\n\n\n");
+    }
+  }
+
+
+  @Test
+  void query3() {
+    //    List<Book> bookList = bookRepo.findAllByNameLike("%飘%");
+    List<Book> bookList = bookRepo.listAllByInfo2("test");
+    if (bookList != null) {
+      log.info("\n\n\n{}", bookList.size());
+      bookList.forEach(b -> log.info("{}", JsonUtil.toJson(b)));
+      log.info("\n\n\n");
+    }
+  }
+
+
+
+
+
+
   @Test
   void query2() {
     bookRepo.findById(28L).ifPresent(u -> log.info("\n\n\n{}\n\n\n", JsonUtil.toJson(u)));
@@ -82,7 +111,7 @@ class BookTests {
   @Test
   void update() {
     bookRepo
-        .findById(10L)
+        .findById(47L)
         .ifPresent(
             o -> {
               o.changeAttr(2L, "test", Set.of(4L, 5L, 6L));

@@ -3,7 +3,6 @@ package io.lpgph.ddd.book.model;
 import io.lpgph.ddd.book.event.CreateBookEvent;
 import io.lpgph.ddd.book.event.RemoveBookEvent;
 import io.lpgph.ddd.common.StateEnum;
-import io.lpgph.ddd.common.domain.AbstractAggregateRoot;
 import io.lpgph.ddd.common.domain.DomainEvent;
 import lombok.*;
 import org.springframework.data.annotation.*;
@@ -14,7 +13,6 @@ import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.util.Assert;
 
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -39,17 +37,8 @@ public class Book {
   /* 启用状态 */
   private StateEnum state;
 
-  /** 创建时间 */
-  @CreatedDate private LocalDateTime gmtCreate;
-
-  /** 创建人 */
-  @CreatedBy private Long createdBy;
-
-  /** 最后修改时间 */
-  @LastModifiedDate private LocalDateTime gmtModified;
-
-  /** 修改入 */
-  @LastModifiedBy private Long modifiedBy;
+  @Embedded(onEmpty = Embedded.OnEmpty.USE_EMPTY)
+  private AuditInfo auditInfo;
 
   /** 乐观锁 */
   @Version private Long version;
@@ -72,7 +61,7 @@ public class Book {
   }
 
   public static Book create(String name) {
-    Book book = Book.builder().name(name).attrs(new HashSet<>()).build();
+    Book book = Book.builder().name(name).attrs(new HashSet<>()).auditInfo(new AuditInfo()).build();
     //    book.setState(StateEnum.ACTIVATED);
     book.activated();
     book.registerEvent(new CreateBookEvent(book.getId(), "people_____" + name));
@@ -125,11 +114,13 @@ public class Book {
   public void deactivated() {
     //    this.setState(StateEnum.DEACTIVATED);
     this.state = StateEnum.DEACTIVATED;
+    //    this.baseModel.setState(StateEnum.DEACTIVATED);
   }
 
   public void activated() {
     //    this.setState(StateEnum.ACTIVATED);
     this.state = StateEnum.ACTIVATED;
+    //    this.baseModel.setState(StateEnum.ACTIVATED);
   }
 
   //  @Transient private final transient List<BookEvent> domainEvents = new ArrayList<>();

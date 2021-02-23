@@ -49,8 +49,8 @@ public class BookRelationalEventListener extends AbstractRelationalEventListener
             isNew ? EventTypeEnum.SAVE : EventTypeEnum.UPDATE,
             JsonUtil.toJson(book2),
             JsonUtil.toJson(book),
-            book.getModifiedBy(),
-            book.getGmtModified()));
+            book.getAuditInfo().getModifiedBy(),
+            book.getAuditInfo().getGmtModified()));
   }
 
   @Override
@@ -73,7 +73,7 @@ public class BookRelationalEventListener extends AbstractRelationalEventListener
             EventTypeEnum.DELETE,
             JsonUtil.toJson(book2),
             JsonUtil.toJson(book),
-            book.getModifiedBy(),
-            book.getGmtModified()));
+            book.getAuditInfo().getModifiedBy(),
+            book.getAuditInfo().getGmtModified()));
   }
 }
