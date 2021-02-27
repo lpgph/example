@@ -13,8 +13,9 @@ public class ShopCardId implements Serializable {
 
   private Long userId;
   private Long goodsId;
+  private Long goodsSkuId;
 
-  public static ShopCardId create(Long userId, Long goodsId) {
-    return new ShopCardId(userId, goodsId);
+  public static ShopCardId create(Long userId, Long goodsId, Long goodsSkuId) {
+    return new ShopCardId(userId, goodsId, goodsSkuId);
   }
 }

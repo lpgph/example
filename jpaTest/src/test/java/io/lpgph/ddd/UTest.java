@@ -43,13 +43,13 @@ public class UTest {
 
   @Test
   void shopCardSave() {
-    shopCardRepo.save(ShopCard.create(ShopCardId.create(1L, 1L), 20));
+    shopCardRepo.save(ShopCard.create(ShopCardId.create(1L, 1L, 1L), 20));
   }
 
   @Test
   void shopCardUpdate() {
     shopCardRepo
-        .findById(ShopCardId.create(1L, 1L))
+        .findById(ShopCardId.create(1L, 1L, 1L))
         .ifPresent(
             o -> {
               o.changeNum(10);
