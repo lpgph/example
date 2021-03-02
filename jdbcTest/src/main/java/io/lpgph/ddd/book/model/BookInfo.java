@@ -16,4 +16,8 @@ public class BookInfo {
 
   @MappedCollection(idColumn = "book_id")
   Set<Tag> tags;
+
+  public static BookInfo create(String ad, Monetary price, Set<Tag> tags) {
+    return new BookInfo(ad,price,tags);
+  }
 }

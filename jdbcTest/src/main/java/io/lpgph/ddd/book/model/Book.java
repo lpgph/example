@@ -22,17 +22,18 @@ import java.util.stream.Collectors;
 @Builder
 @Table("jdbc_book")
 public class Book {
+  //  extends BaseBook {
 
   @Id private final Long id;
   //  private BookId id;
-
-  @Embedded(onEmpty = Embedded.OnEmpty.USE_NULL)
-  private BookInfo info;
 
   private String name;
 
   @MappedCollection(idColumn = "book_id")
   private Set<BookAttr> attrs;
+
+  @Embedded(onEmpty = Embedded.OnEmpty.USE_EMPTY)
+  private BookInfo info;
 
   /* 启用状态 */
   private StateEnum state;
@@ -69,7 +70,8 @@ public class Book {
   }
 
   public void changeInfo(BookInfo info) {
-    this.info = info;
+        this.info = info;
+//    this.setInfo(info);
   }
 
   public void remove() {

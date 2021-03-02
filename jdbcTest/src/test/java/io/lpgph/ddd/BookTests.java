@@ -30,7 +30,6 @@ class BookTests {
     }
   }
 
-
   @Test
   void query1() {
     //    List<Book> bookList = bookRepo.findAllByNameLike("%飘%");
@@ -41,7 +40,6 @@ class BookTests {
       log.info("\n\n\n");
     }
   }
-
 
   @Test
   void query3() {
@@ -54,10 +52,15 @@ class BookTests {
     }
   }
 
-
-
-
-
+  @Test
+  void query4() {
+    List<Book> bookList = bookRepo.findAllByInfo(BookInfo.create("test", null, null));
+    if (bookList != null) {
+      log.info("\n\n\n{}", bookList.size());
+      bookList.forEach(b -> log.info("{}", JsonUtil.toJson(b)));
+      log.info("\n\n\n");
+    }
+  }
 
   @Test
   void query2() {
