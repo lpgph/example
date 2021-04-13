@@ -1,6 +1,6 @@
-package io.lpgph.auth.identity.security.authentication.mobile;
+package io.lpgph.uaa.identity.security.authentication.mobile;
 
-import io.lpgph.auth.identity.security.service.ISmsCodeService;
+import io.lpgph.uaa.identity.security.service.ISmsCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

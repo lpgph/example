@@ -1,6 +1,6 @@
-package io.lpgph.auth.identity.security.filter;
+package io.lpgph.uaa.identity.security.filter;
 
-import io.lpgph.auth.common.json.JsonUtil;
+import io.lpgph.uaa.common.json.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;
 

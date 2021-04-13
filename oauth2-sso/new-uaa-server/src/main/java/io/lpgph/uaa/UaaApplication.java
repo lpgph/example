@@ -1,4 +1,4 @@
-package io.lpgph.auth;
+package io.lpgph.uaa;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

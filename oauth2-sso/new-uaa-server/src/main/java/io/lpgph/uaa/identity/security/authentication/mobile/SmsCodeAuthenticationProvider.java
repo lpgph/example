@@ -1,6 +1,6 @@
-package io.lpgph.auth.identity.security.authentication.mobile;
+package io.lpgph.uaa.identity.security.authentication.mobile;
 
-import io.lpgph.auth.identity.security.service.ISmsCodeService;
+import io.lpgph.uaa.identity.security.service.ISmsCodeService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package io.lpgph.auth.identity.group;
+package io.lpgph.uaa.identity.group;
 
 import java.util.Set;
 

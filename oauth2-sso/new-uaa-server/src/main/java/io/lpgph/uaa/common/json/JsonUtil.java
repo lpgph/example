@@ -1,4 +1,4 @@
-package io.lpgph.auth.common.json;
+package io.lpgph.uaa.common.json;
 
 import lombok.extern.slf4j.Slf4j;
 

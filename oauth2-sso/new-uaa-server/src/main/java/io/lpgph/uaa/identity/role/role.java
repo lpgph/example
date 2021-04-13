@@ -1,4 +1,4 @@
-package io.lpgph.auth.identity.role;
+package io.lpgph.uaa.identity.role;
 
 import java.util.Set;
 

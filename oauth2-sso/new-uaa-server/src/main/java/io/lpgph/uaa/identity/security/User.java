@@ -1,4 +1,4 @@
-package io.lpgph.auth.identity.security;
+package io.lpgph.uaa.identity.security;
 
 import java.io.Serializable;
 import java.util.ArrayList;

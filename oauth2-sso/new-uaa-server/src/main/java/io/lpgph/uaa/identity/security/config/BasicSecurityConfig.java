@@ -1,6 +1,6 @@
-package io.lpgph.auth.identity.security.config;
+package io.lpgph.uaa.identity.security.config;
 
-import io.lpgph.auth.identity.security.CustomUserDetailsService;
+import io.lpgph.uaa.identity.security.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;

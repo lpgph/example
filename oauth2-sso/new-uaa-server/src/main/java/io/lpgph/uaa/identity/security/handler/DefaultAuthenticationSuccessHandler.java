@@ -1,7 +1,7 @@
-package io.lpgph.auth.identity.security.handler;
+package io.lpgph.uaa.identity.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.lpgph.auth.common.json.JsonUtil;
+import io.lpgph.uaa.common.json.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;

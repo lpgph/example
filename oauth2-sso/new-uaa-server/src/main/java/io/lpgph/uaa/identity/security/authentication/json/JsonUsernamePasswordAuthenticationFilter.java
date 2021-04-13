@@ -1,7 +1,7 @@
-package io.lpgph.auth.identity.security.authentication.json;
+package io.lpgph.uaa.identity.security.authentication.json;
 
-import io.lpgph.auth.common.json.TypeReference;
-import io.lpgph.auth.common.json.JsonUtil;
+import io.lpgph.uaa.common.json.TypeReference;
+import io.lpgph.uaa.common.json.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;

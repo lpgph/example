@@ -1,4 +1,4 @@
-package io.lpgph.auth.identity.client;
+package io.lpgph.uaa.identity.client;
 
 /**
  * 客户端作用域 <br>

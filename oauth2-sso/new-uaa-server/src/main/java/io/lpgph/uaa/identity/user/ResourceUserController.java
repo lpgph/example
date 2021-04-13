@@ -1,6 +1,6 @@
-package io.lpgph.auth.identity.user;
+package io.lpgph.uaa.identity.user;
 
-import io.lpgph.auth.common.json.JsonUtil;
+import io.lpgph.uaa.common.json.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,7 +17,7 @@ import java.util.Map;
  * 用户资源服务器请求 <br>
  * 所有经过 ResourceSecurityConfig 配置的请求
  *
- * @see io.lpgph.auth.identity.security.config.ResourceSecurityConfig
+ * @see io.lpgph.uaa.identity.security.config.ResourceSecurityConfig
  */
 @Slf4j
 @RestController

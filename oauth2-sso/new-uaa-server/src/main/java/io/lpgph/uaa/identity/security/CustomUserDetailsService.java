@@ -1,6 +1,6 @@
-package io.lpgph.auth.identity.security;
+package io.lpgph.uaa.identity.security;
 
-import io.lpgph.auth.common.bean.RESTfulGrantedAuthority;
+import io.lpgph.uaa.common.bean.RESTfulGrantedAuthority;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

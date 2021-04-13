@@ -1,4 +1,4 @@
-package io.lpgph.auth.common.constant;
+package io.lpgph.uaa.common.constant;
 
 
 public final class AuthConst {

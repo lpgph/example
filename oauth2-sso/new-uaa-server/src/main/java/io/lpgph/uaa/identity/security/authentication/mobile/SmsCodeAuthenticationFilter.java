@@ -1,4 +1,4 @@
-package io.lpgph.auth.identity.security.authentication.mobile;
+package io.lpgph.uaa.identity.security.authentication.mobile;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;

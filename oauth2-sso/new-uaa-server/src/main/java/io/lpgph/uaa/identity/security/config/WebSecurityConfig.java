@@ -1,6 +1,6 @@
-package io.lpgph.auth.identity.security.config;
+package io.lpgph.uaa.identity.security.config;
 
-import io.lpgph.auth.identity.security.filter.AuthTestAuthenticationFilter;
+import io.lpgph.uaa.identity.security.filter.AuthTestAuthenticationFilter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;

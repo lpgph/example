@@ -1,4 +1,4 @@
-package io.lpgph.auth.identity.security.service;
+package io.lpgph.uaa.identity.security.service;
 
 /** 短信服务 */
 public interface ISmsCodeService {

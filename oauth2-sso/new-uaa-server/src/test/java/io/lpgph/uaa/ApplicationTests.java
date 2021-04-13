@@ -1,4 +1,4 @@
-package io.lpgph.auth;
+package io.lpgph.uaa;
 
 
 import java.net.URI;

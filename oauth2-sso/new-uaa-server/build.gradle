@@ -68,7 +68,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.security.experimental:spring-security-oauth2-authorization-server:0.0.3'
+    implementation 'org.springframework.security.experimental:spring-security-oauth2-authorization-server:0.1.0'
 
     // 认证服务器集成了用户即 identity resource  同时可以对第三方认证平台进行认证 所以也是个 client
 //    implementation("org.springframework.boot:spring-boot-starter-webflux")

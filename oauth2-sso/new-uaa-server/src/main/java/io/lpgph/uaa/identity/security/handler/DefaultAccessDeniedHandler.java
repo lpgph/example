@@ -1,4 +1,4 @@
-package io.lpgph.auth.identity.security.handler;
+package io.lpgph.uaa.identity.security.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

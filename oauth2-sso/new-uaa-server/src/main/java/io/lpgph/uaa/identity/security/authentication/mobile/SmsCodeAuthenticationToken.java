@@ -1,4 +1,4 @@
-package io.lpgph.auth.identity.security.authentication.mobile;
+package io.lpgph.uaa.identity.security.authentication.mobile;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

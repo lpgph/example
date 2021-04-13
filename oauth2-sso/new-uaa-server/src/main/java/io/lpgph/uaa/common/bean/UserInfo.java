@@ -1,4 +1,4 @@
-package io.lpgph.auth.common.bean;
+package io.lpgph.uaa.common.bean;
 
 import lombok.Getter;
 import lombok.Setter;

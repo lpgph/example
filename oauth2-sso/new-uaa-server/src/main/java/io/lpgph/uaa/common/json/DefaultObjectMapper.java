@@ -1,4 +1,4 @@
-package io.lpgph.auth.common.json;
+package io.lpgph.uaa.common.json;
 
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonGenerator;

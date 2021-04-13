@@ -1,6 +1,6 @@
-package io.lpgph.auth.identity.user;
+package io.lpgph.uaa.identity.user;
 
-import io.lpgph.auth.common.json.JsonUtil;
+import io.lpgph.uaa.common.json.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

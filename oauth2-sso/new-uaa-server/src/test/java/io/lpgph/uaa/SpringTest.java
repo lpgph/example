@@ -1,7 +1,7 @@
-package io.lpgph.auth;
+package io.lpgph.uaa;
 
-import io.lpgph.auth.common.bean.LoginInfo;
-import io.lpgph.auth.common.json.JsonUtil;
+import io.lpgph.uaa.common.bean.LoginInfo;
+import io.lpgph.uaa.common.json.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

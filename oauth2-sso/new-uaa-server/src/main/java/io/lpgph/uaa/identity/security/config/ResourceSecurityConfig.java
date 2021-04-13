@@ -1,4 +1,4 @@
-package io.lpgph.auth.identity.security.config;
+package io.lpgph.uaa.identity.security.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;

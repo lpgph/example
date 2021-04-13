@@ -1,4 +1,4 @@
-package io.lpgph.auth.identity.security.authentication.json;
+package io.lpgph.uaa.identity.security.authentication.json;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;

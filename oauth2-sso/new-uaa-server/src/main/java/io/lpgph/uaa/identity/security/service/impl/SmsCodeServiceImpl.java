@@ -1,6 +1,6 @@
-package io.lpgph.auth.identity.security.service.impl;
+package io.lpgph.uaa.identity.security.service.impl;
 
-import io.lpgph.auth.identity.security.service.ISmsCodeService;
+import io.lpgph.uaa.identity.security.service.ISmsCodeService;
 import org.springframework.stereotype.Service;
 
 /** 将短信验证码 保存到redis中 通过短信服务发送 */
