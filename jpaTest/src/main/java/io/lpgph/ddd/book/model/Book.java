@@ -23,13 +23,15 @@ import java.util.Set;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Book {
-//     public class Book extends AbstractAggregateRoot {
+  //     public class Book extends AbstractAggregateRoot {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private String name;
+
+  @Embedded private BookInfo bookInfo;
 
   //  @ManyToMany(fetch = FetchType.LAZY)
   //  @JoinTable(
@@ -42,21 +44,14 @@ public class Book {
   //      foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
   //  private List<People> peoples;
 
-  //  @ElementCollection
-  //  @CollectionTable(
-  //          name = "book_peoples",
-  //          joinColumns = @JoinColumn(name = "book_id", nullable = false,referencedColumnName =
-  // "id"),
-  //          foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
-  //  @Column(name = "people_id", nullable = false)
   // private List<Long> peoples;
   @ElementCollection
   @CollectionTable(
-      name = "book_peoples",
+      name = "book_author",
       joinColumns = @JoinColumn(name = "book_id", nullable = false),
       foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
-  //  private Set<PeopleId> peoples;
-  private Set<PeopleItem> peoples;
+  //  @Column(name = "people_id", nullable = false)
+  private Set<Author> authors;
 
   /** 创建时间 */
   @CreatedDate private LocalDateTime gmtCreate;
@@ -79,20 +74,21 @@ public class Book {
 
   @Transient private final transient List<BookEvent> domainEvents = new ArrayList<>();
 
-  public Book(String name) {
+  public Book(String name, String remark, String tags) {
     this.name = name;
+    this.bookInfo = new BookInfo(remark, tags);
     domainEvents.add(new CreateBookEvent(this.getId(), "people_____" + this.name));
   }
 
   public void borrow(long peopleId) {
-    if (this.peoples == null) this.peoples = new HashSet<>();
-    this.peoples.add(PeopleItem.create(peopleId));
+    if (this.authors == null) this.authors = new HashSet<>();
+    this.authors.add(Author.create(peopleId));
   }
 
-//  public void borrow(PeopleId peopleId) {
-//    if (this.peoples == null) this.peoples = new HashSet<>();
-//    this.peoples.add(peopleId);
-//  }
+  //  public void borrow(PeopleId peopleId) {
+  //    if (this.peoples == null) this.peoples = new HashSet<>();
+  //    this.peoples.add(peopleId);
+  //  }
 
   @DomainEvents
   private List<BookEvent> domainEvents() {

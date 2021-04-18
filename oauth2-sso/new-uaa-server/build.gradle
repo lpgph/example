@@ -15,30 +15,6 @@ version = "0.0.1-SNAPSHOT"
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
-//定义目录结构
-sourceSets {
-    main {
-        java {
-            srcDir("src/main/java") // 指定源码目录
-        }
-        resources {
-            srcDirs = ["src/main/resources", "src/main/java"] //指定资源目录
-            includes = ["**/*"]
-            excludes = ["**/*.java,**/*.kt"]
-        }
-    }
-    test {
-        java {
-            srcDir("src/test/java") // 指定源码目录
-        }
-        resources {
-            srcDirs = ["src/test/resources", "src/test/java"] //指定资源目录
-            includes = ["**/*"]
-            excludes = ["**/*.java,**/*.kt"]
-        }
-    }
-}
-
 //定义jar包版本号
 ext {
     set("jacksonVersion", "2.10.3")

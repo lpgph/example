@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Embeddable
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PeopleItem implements Serializable {
+public class Author implements Serializable {
 
   @Column(name = "people_id", nullable = false)
   private Long peopleId;
@@ -20,7 +20,7 @@ public class PeopleItem implements Serializable {
   @Column(name = "gmt_create", nullable = false)
   private LocalDateTime gmtCreate;
 
-  public static PeopleItem create(Long peopleId) {
-    return new PeopleItem(peopleId, LocalDateTime.now());
+  public static Author create(Long peopleId) {
+    return new Author(peopleId, LocalDateTime.now());
   }
 }

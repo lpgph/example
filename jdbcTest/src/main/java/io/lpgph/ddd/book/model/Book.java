@@ -13,6 +13,7 @@ import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.util.Assert;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -32,14 +33,25 @@ public class Book {
   @MappedCollection(idColumn = "book_id")
   private Set<BookAttr> attrs;
 
-  @Embedded(onEmpty = Embedded.OnEmpty.USE_EMPTY)
-  private BookInfo info;
+  @Embedded.Empty private BookInfo info;
 
   /* 启用状态 */
   private StateEnum state;
 
-  @Embedded(onEmpty = Embedded.OnEmpty.USE_EMPTY)
-  private AuditInfo auditInfo;
+  //  @Embedded(onEmpty = Embedded.OnEmpty.USE_EMPTY)
+  //  private AuditInfo auditInfo;
+
+  /** 创建时间 */
+  @CreatedDate private LocalDateTime createdDate;
+
+  /** 创建人 */
+  @CreatedBy private Long createdBy;
+
+  /** 最后修改时间 */
+  @LastModifiedDate private LocalDateTime modifiedDate;
+
+  /** 修改入 */
+  @LastModifiedBy private Long modifiedBy;
 
   /** 乐观锁 */
   @Version private Long version;
@@ -62,7 +74,12 @@ public class Book {
   }
 
   public static Book create(String name) {
-    Book book = Book.builder().name(name).attrs(new HashSet<>()).auditInfo(new AuditInfo()).build();
+    Book book =
+        Book.builder()
+            .name(name)
+            .attrs(new HashSet<>())
+            //            .auditInfo(new AuditInfo())
+            .build();
     //    book.setState(StateEnum.ACTIVATED);
     book.activated();
     book.registerEvent(new CreateBookEvent(book.getId(), "people_____" + name));
@@ -70,8 +87,8 @@ public class Book {
   }
 
   public void changeInfo(BookInfo info) {
-        this.info = info;
-//    this.setInfo(info);
+    this.info = info;
+    //    this.setInfo(info);
   }
 
   public void remove() {

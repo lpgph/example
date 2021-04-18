@@ -42,9 +42,9 @@ class DDDApplicationTests {
   void create() {
 //    People people = new People("张三");
 //    People savePeople = peopleRepo.save(people);
-//    Book book = new Book("<围城>");
-//    book.borrow(savePeople.getId());
-//    bookRepo.save(book);
+    Book book = new Book("<围城>","这是一个故事","哲学");
+    book.borrow(1L);
+    bookRepo.save(book);
   }
 
   @Test

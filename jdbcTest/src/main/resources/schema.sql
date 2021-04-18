@@ -13,37 +13,25 @@ CREATE TABLE `jdbc_user`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci;
 
+
+
 CREATE TABLE `jdbc_book`
 (
-    `id`           bigint NOT NULL AUTO_INCREMENT,
-    `name`         varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-    `created_by`   bigint                                 DEFAULT NULL,
-    `gmt_create`   datetime(6)                            DEFAULT NULL,
-    `gmt_modified` datetime(6)                            DEFAULT NULL,
-    `modified_by`  bigint                                 DEFAULT NULL,
-    `version`      bigint                                 DEFAULT NULL,
+    `id`            bigint NOT NULL AUTO_INCREMENT,
+    `name`          varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `state`         tinyint                                DEFAULT NULL,
+
+    `created_by`    bigint                                 DEFAULT NULL,
+    `created_date`  datetime                               DEFAULT NULL,
+    `modified_date` datetime                               DEFAULT NULL,
+    `modified_by`   bigint                                 DEFAULT NULL,
+    `version`       bigint                                 DEFAULT NULL,
     PRIMARY KEY (`id`),
     index idx_name (`name`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci;
 
-
-CREATE TABLE `jdbc_book_auditor`
-(
-    `id`          bigint   NOT NULL AUTO_INCREMENT,
-    `book_id`     bigint   not NULL,
-    `event_type`  tinyint  not NULL default 0,
-    `old_value`   json     NULL     default null,
-    `new_value`   json     NULL     default null,
-    `user_id`     bigint   not NULL,
-    `create_date` datetime not NULL,
-    PRIMARY KEY (`id`),
-    INDEX idx_book (`book_id`, `create_date`),
-    INDEX idx_user (`user_id`, `create_date`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_general_ci;
 
 CREATE TABLE `jdbc_book_attr`
 (
@@ -66,6 +54,42 @@ CREATE TABLE `jdbc_book_attr_value`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci;
 
+
+CREATE TABLE `jdbc_book_info`
+(
+    `book_id` bigint         not NULL,
+    `ad`      varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `price`   decimal(30, 2) NOT NULL                DEFAULT 0,
+    PRIMARY KEY (`book_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci;
+
+CREATE TABLE `jdbc_book_tag`
+(
+    `book_id` bigint      not NULL,
+    `name`    varchar(50) not NULL default ''
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci;
+
+
+CREATE TABLE `jdbc_book_auditor`
+(
+    `id`          bigint   NOT NULL AUTO_INCREMENT,
+    `book_id`     bigint   not NULL,
+    `event_type`  tinyint  not NULL default 0,
+    `old_value`   json     NULL     default null,
+    `new_value`   json     NULL     default null,
+    `user_id`     bigint   not NULL,
+    `create_date` datetime not NULL,
+    PRIMARY KEY (`id`),
+    INDEX idx_book (`book_id`, `create_date`),
+    INDEX idx_user (`user_id`, `create_date`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci;
+
 CREATE TABLE `jdbc_user_book`
 (
     `user_id`    bigint   not NULL,
@@ -84,8 +108,10 @@ CREATE TABLE `jdbc_event_stored`
     `gmt_create`  datetime                                NOT NULL,
     `gmt_sender`  datetime                                         DEFAULT NULL,
     `event_state` int                                     NOT NULL DEFAULT '0',
-    `type`     varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+    `type`        varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci;
+
+

@@ -47,7 +47,8 @@ class UserTests {
   @Test
   void create() throws InterruptedException {
     Random random = new Random(System.currentTimeMillis());
-    User user = User.create(UserId.create(random.nextLong()), "test");
+        User user = User.create(UserId.create(random.nextLong()), "test");
+//    User user = User.create("test");
     user.changeTags("阳光", "运动", "勇敢");
     user.changeProp(new UserProp(true, 3));
     user.changeAddress(new UserAddress("家", "连云路"), new UserAddress("公司", "平安路"));
@@ -70,9 +71,7 @@ class UserTests {
 
   @Test
   void remove() {
-    userRepository
-        .findByUserId(UserId.create(38L))
-        .ifPresent(u -> userRepository.remove(u));
+    userRepository.findByUserId(UserId.create(38L)).ifPresent(u -> userRepository.remove(u));
   }
 
   @Test

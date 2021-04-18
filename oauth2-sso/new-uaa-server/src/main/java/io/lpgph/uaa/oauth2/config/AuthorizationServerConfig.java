@@ -1,5 +1,6 @@
 package io.lpgph.uaa.oauth2.config;
 
+import java.time.Duration;
 import java.util.UUID;
 
 import com.nimbusds.jose.jwk.JWKSet;
@@ -10,6 +11,7 @@ import com.nimbusds.jose.proc.SecurityContext;
 import io.lpgph.uaa.oauth2.jose.Jwks;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
@@ -29,6 +31,7 @@ import org.springframework.security.web.SecurityFilterChain;
  * @since 0.0.1
  */
 @Configuration(proxyBeanMethods = false)
+// @Import(OAuth2AuthorizationServerConfiguration.class)
 public class AuthorizationServerConfig {
 
   @Bean
@@ -55,6 +58,8 @@ public class AuthorizationServerConfig {
             .scope(OidcScopes.OPENID)
             .scope("message.read")
             .scope("message.write")
+            .tokenSettings(
+                tokenSettings -> tokenSettings.refreshTokenTimeToLive(Duration.ofHours(1L)))
             .clientSettings(clientSettings -> clientSettings.requireUserConsent(true))
             .build();
     return new InMemoryRegisteredClientRepository(registeredClient);

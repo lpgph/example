@@ -14,8 +14,13 @@ include(':gateway:web-shopping')
 include(':gateway:web-marketing')
 
 
-include(':uaa:auth-server')
-include(':uaa:oidc-server')
+//include(':uaa:auth-server')
+//include(':uaa:oidc-server')
+
+include(':samples:authorizationserver')
+include(':samples:client')
+include(':samples:resourceserver')
+
 
 include('uaa-server')  // uaa auth
 include('new-uaa-server')  // uaa auth
