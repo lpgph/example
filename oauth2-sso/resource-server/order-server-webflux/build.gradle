@@ -3,8 +3,8 @@ plugins {
     id "idea"
     id "eclipse"
     id 'maven-publish'
-    id 'org.springframework.boot' version '2.4.0'
-    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'org.springframework.boot' version '2.4.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'com.bmuschko.docker-spring-boot-application' version '6.6.1'
 }
 description = "资源服务-商品 完全使用webflux"
@@ -39,7 +39,7 @@ sourceSets {
 
 //定义jar包版本号
 ext {
-    set('springCloudVersion', "2020.0.0-M6")
+    set('springCloudVersion', "2020.0.2")
     set("jacksonVersion", "2.10.3")
     set('springCloudAlibabaVersion', "2.2.3.RELEASE")
     set("feignReactorVersion", "2.0.25")

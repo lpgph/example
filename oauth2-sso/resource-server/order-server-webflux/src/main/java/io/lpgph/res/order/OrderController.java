@@ -128,7 +128,8 @@ public class OrderController {
   }
 
   // 需要有指定范围域 或 指定权限
-  @PreAuthorize("hasAuthority('SCOPE_mall') or hasAuthority('order/t1:read')")
+  //  @PreAuthorize("hasAuthority('SCOPE_mall') or hasAuthority('order/t1:read')")
+  @PreAuthorize("hasAnyAuthority('SCOPE_mall','order/t1:read')")
   @GetMapping("/t2")
   public Mono<Object> t2() {
     return Mono.just("SCOPE_mall  or order/t1:read " + UUID.randomUUID().toString());
