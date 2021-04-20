@@ -21,9 +21,11 @@ include(':samples:authorizationserver')
 include(':samples:client')
 include(':samples:resourceserver')
 
+include('uaa-sample')
 
 include('uaa-server')  // uaa auth
 include('new-uaa-server')  // uaa auth
+
 //include('authorization-server')
 //include('authentication-server')
 //include('resource-owner')
