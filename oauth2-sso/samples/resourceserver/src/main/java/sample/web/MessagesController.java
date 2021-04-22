@@ -29,4 +29,9 @@ public class MessagesController {
 	public String[] getMessages() {
 		return new String[] {"Message 1", "Message 2", "Message 3"};
 	}
+
+	@GetMapping("/help")
+	public String[] getHelp() {
+		return new String[] {"help 1", "help 2", "help 3"};
+	}
 }

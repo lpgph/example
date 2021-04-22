@@ -8,11 +8,8 @@ pluginManagement {
 
 rootProject.name = 'oauth2-sso'
 
-include(':gateway:api-gateway')
-include(':gateway:mobile-shopping')
-include(':gateway:web-shopping')
-include(':gateway:web-marketing')
-
+include(':gateway:new-gateway')
+include(':gateway:old-gateway')
 
 //include(':uaa:auth-server')
 //include(':uaa:oidc-server')
@@ -20,8 +17,6 @@ include(':gateway:web-marketing')
 include(':samples:authorizationserver')
 include(':samples:client')
 include(':samples:resourceserver')
-
-include('uaa-sample')
 
 include('uaa-server')  // uaa auth
 include('new-uaa-server')  // uaa auth

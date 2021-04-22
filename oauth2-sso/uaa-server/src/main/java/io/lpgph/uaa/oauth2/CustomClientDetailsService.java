@@ -21,7 +21,6 @@ public class CustomClientDetailsService implements ClientDetailsService {
   @Override
   public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
     BaseClientDetails clientDetails = new BaseClientDetails();
-
     switch (clientId) {
       case "client1":
         clientDetails.setClientId("client1");
@@ -34,7 +33,7 @@ public class CustomClientDetailsService implements ClientDetailsService {
         // 授权模式 认证成功够跳转跳转页面 并携带授权码
         clientDetails.setRegisteredRedirectUri(
             Set.of(
-                "http://localhost:8081/login/oauth2/code/c1",
+                "http://localhost:8081/login/oauth2/code/client1",
                 "http://localhost:8082/login/oauth2/code/cms"));
         clientDetails.setAdditionalInformation(Map.of("admin", true));
         break;

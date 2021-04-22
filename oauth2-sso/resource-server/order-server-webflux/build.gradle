@@ -40,8 +40,9 @@ sourceSets {
 //定义jar包版本号
 ext {
     set('springCloudVersion', "2020.0.2")
+    set('springCloudAlibabaVersion', "2021.1")
+
     set("jacksonVersion", "2.10.3")
-    set('springCloudAlibabaVersion', "2.2.3.RELEASE")
     set("feignReactorVersion", "2.0.25")
 
     compileJava.options.encoding = "UTF-8"
@@ -67,7 +68,7 @@ dependencies {
 //    implementation("org.springframework.boot:spring-boot-starter-websocket")
     //##############################   spring cloud   ##############################
     // bootstrap.xml  或者 spring.cloud.bootstrap.enabled=true
-    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
+//    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
 
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     // openfeign依赖
@@ -84,6 +85,7 @@ dependencies {
 
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     // 支持jdk8+
     implementation("com.fasterxml.jackson.module:jackson-module-parameter-names:${jacksonVersion}")

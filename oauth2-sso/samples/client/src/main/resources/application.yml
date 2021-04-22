@@ -45,3 +45,4 @@ spring:
 
 messages:
   base-uri: http://127.0.0.1:8090/messages
+  help-uri: http://127.0.0.1:8090/help

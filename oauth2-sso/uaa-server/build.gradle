@@ -3,8 +3,8 @@ plugins {
     id "idea"
     id "eclipse"
     id 'maven-publish'
-    id 'org.springframework.boot' version '2.4.0'
-    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'org.springframework.boot' version '2.4.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'com.bmuschko.docker-spring-boot-application' version '6.6.1'
 }
 
@@ -14,30 +14,6 @@ group = "io.lpgph"
 version = "0.0.1-SNAPSHOT"
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
-
-//定义目录结构
-sourceSets {
-    main {
-        java {
-            srcDir("src/main/java") // 指定源码目录
-        }
-        resources {
-            srcDirs = ["src/main/resources", "src/main/java"] //指定资源目录
-            includes = ["**/*"]
-            excludes = ["**/*.java,**/*.kt"]
-        }
-    }
-    test {
-        java {
-            srcDir("src/test/java") // 指定源码目录
-        }
-        resources {
-            srcDirs = ["src/test/resources", "src/test/java"] //指定资源目录
-            includes = ["**/*"]
-            excludes = ["**/*.java,**/*.kt"]
-        }
-    }
-}
 
 //定义jar包版本号
 ext {
@@ -75,9 +51,6 @@ dependencies {
 //    implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-
 //    implementation 'org.apache.rocketmq:rocketmq-spring-boot-starter:2.1.2-SNAPSHOT'
 
     // 支持jdk8+
@@ -85,8 +58,8 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}")
 
-    implementation("org.springframework.boot:spring-boot-starter-data-redis")
-    implementation("org.springframework.session:spring-session-data-redis")
+//    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+//    implementation("org.springframework.session:spring-session-data-redis")
 
 //    implementation 'org.springframework.session:spring-session-core'
 

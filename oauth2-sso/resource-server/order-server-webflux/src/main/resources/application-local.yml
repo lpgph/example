@@ -1,5 +1,13 @@
 
+server:
+  port: 8071
+  tomcat:
+    uri-encoding: UTF-8
+
 spring:
+  application:
+    name: order
+
   security:
     oauth2:
       resourceserver:
@@ -22,16 +30,20 @@ spring:
     ansi:
       enabled: ALWAYS #控制台彩色输出
   cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
     loadbalancer:
       ribbon:
         enabled: false
 logging:
   level:
+    web: INFO
     org:
       springframework: INFO  # INFO TRACE
     com:
       alibaba:
-        nacos: ERROR
+        nacos: INFO
 
 #开启请求压缩功能
 feign:
