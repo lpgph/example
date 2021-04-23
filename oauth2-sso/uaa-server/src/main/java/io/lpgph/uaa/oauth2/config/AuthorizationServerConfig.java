@@ -16,7 +16,10 @@ import org.springframework.security.oauth2.provider.token.*;
 
 /**
  * @see
- *     org.springframework.boot.autoconfigure.security.oauth2.authserver.OAuth2AuthorizationServerConfiguration;
+ *     org.springframework.boot.autoconfigure.security.oauth2.authserver.OAuth2AuthorizationServerConfiguration
+ * @see org.springframework.security.oauth2.provider.endpoint.TokenEndpoint
+ * @see org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestValidator
+ * @see org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory  组装token请求及校验scopes
  */
 @Slf4j
 @AllArgsConstructor

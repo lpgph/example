@@ -115,3 +115,42 @@ CREATE TABLE `jdbc_event_stored`
   COLLATE = utf8mb4_general_ci;
 
 
+
+
+CREATE TABLE `resource_server_policy`
+(
+    `id`            bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '自增长id,委派标识',
+    `client_id`     bigint unsigned NOT NULL COMMENT '客户端ID',
+    `name`          varchar(50)     NOT NULL DEFAULT '' COMMENT '名称',
+    `description`   varchar(255)    NOT NULL DEFAULT '' COMMENT '描述',
+    `type`          tinyint         NOT NULL DEFAULT 0 COMMENT '策略类型 0 角色 1 客户端 2 时间 3 用户 4 用户组',
+
+    `created_by`     bigint unsigned NOT NULL default 0 COMMENT '创建人',
+    `created_date`  DATETIME        NOT NULL COMMENT '创建时间',
+    `modified_by`   bigint unsigned NOT NULL default 0 COMMENT '修改人',
+    `modified_date` DATETIME        NOT NULL COMMENT '修改时间',
+    `version`       bigint unsigned NOT NULL DEFAULT 0 COMMENT '版本号',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY uk_name (`name`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT '资源服务授权策略';
+
+CREATE TABLE `policy_role`
+(
+    `policy_id`   bigint unsigned NOT NULL COMMENT '授权策略ID',
+    `role_id`     bigint unsigned NOT NULL COMMENT '角色ID',
+    `is_required` bit(1)          NOT NULL DEFAULT b'0' COMMENT '是否必须 存在一个或多个角色的时候 用户或客户端作用域必须同时拥有该角色',
+    PRIMARY KEY (`policy_id`, `role_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT '角色授权策略';
+
+CREATE TABLE `policy_user`
+(
+    `policy_id` bigint unsigned NOT NULL COMMENT '授权策略ID',
+    `user_id`   bigint unsigned NOT NULL COMMENT '用户ID',
+    PRIMARY KEY (`policy_id`, `user_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci COMMENT '用户授权策略';

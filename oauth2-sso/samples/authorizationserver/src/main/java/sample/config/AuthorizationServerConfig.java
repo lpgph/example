@@ -59,6 +59,7 @@ public class AuthorizationServerConfig {
                   tokenSettings.accessTokenTimeToLive();
                 })
             .scope(OidcScopes.OPENID)
+            .scope("message")
             .scope("message.read")
             .scope("message.write")
             .clientSettings(
