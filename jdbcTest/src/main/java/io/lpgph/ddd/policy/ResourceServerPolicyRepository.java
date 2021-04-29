@@ -9,4 +9,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ResourceServerPolicyRepository
-    extends CrudRepository<AbstractResourceServerPolicy, Long> {}
+    extends CrudRepository<ResourceServerPolicy, Long> {}

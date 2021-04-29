@@ -30,23 +30,24 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@Bean
-	WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().antMatchers("/webjars/**");
-	}
+  @Bean
+  WebSecurityCustomizer webSecurityCustomizer() {
+    return (web) -> web.ignoring().antMatchers("/webjars/**");
+  }
 
-	// formatter:off
-	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http
-			.authorizeRequests(authorizeRequests ->
-				authorizeRequests.anyRequest().authenticated()
-			)
-			.oauth2Login(oauth2Login ->
-				oauth2Login.loginPage("/oauth2/authorization/messaging-client-oidc"))
-			.oauth2Client(withDefaults());
-		return http.build();
-	}
-	// formatter:on
+  // formatter:off
+  @Bean
+  SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http.authorizeRequests(
+            authorizeRequests ->
+                    authorizeRequests.anyRequest().permitAll()
+            //				authorizeRequests.anyRequest().authenticated()
+            )
+        .oauth2Login(
+            oauth2Login -> oauth2Login.loginPage("/oauth2/authorization/messaging-client-oidc"))
+        .oauth2Client(withDefaults());
+    return http.build();
+  }
+  // formatter:on
 
 }

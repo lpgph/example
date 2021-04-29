@@ -1,11 +1,9 @@
 package io.lpgph.ddd.book.constant.e;
 
-
 import io.lpgph.ddd.common.BaseEnum;
 
 import java.util.HashMap;
 import java.util.Map;
-
 
 public enum EventTypeEnum implements BaseEnum {
   // 启用

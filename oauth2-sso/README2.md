@@ -28,8 +28,9 @@ server:
 ###  Json登录
     https://github.com/dk980241/spring-boot-security-demo.git 
 ### 授权登录 
-    https://www.cnblogs.com/cjsblog/p/9241217.html 
+    https://www.cnblogs.com/cjsblog/p/9241217.html
 ### 微信授权
+    https://gitee.com/dgut-sai/security-oauth2
     https://github.com/sunjc/wechat-api
     https://blog.51cto.com/7308310/2457336
     https://blog.csdn.net/qq_33417321/article/details/108614245

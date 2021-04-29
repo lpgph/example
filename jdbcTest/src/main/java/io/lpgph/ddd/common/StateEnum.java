@@ -3,7 +3,7 @@ package io.lpgph.ddd.common;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum StateEnum implements BaseEnum{
+public enum StateEnum implements BaseEnum {
   // 启用
   ACTIVATED(3),
   // 禁用
@@ -18,6 +18,7 @@ public enum StateEnum implements BaseEnum{
   public int getValue() {
     return value;
   }
+
 
   private static final Map<Integer, StateEnum> mappings = new HashMap<>(16);
 

@@ -11,9 +11,13 @@ import java.util.Set;
 @SpringBootTest
 public class PolicyTest {
 
-  @Autowired private ResourceServerPolicyUserRepository resourceServerPolicyUserRepository;
+  @Autowired private ResourceServerUserPolicyRepository resourceServerPolicyUserRepository;
 
-  @Autowired private ResourceServerPolicyRoleRepository resourceServerPolicyRoleRepository;
+  @Autowired private ResourceServerRolePolicyRepository resourceServerPolicyRoleRepository;
+
+  @Autowired private AbstractResourceServerPolicyRepository abstractResourceServerPolicyRepository;
+
+  @Autowired private ResourceServerPolicyRepository resourceServerPolicyRepository;
 
   @Test
   public void userTest() {
@@ -27,5 +31,30 @@ public class PolicyTest {
     ResourceServerPolicyRole rolePolicy =
         ResourceServerPolicyRole.create(6L, "角色策略6", "角色策略", Set.of(new PolicyRole(1L, false)));
     resourceServerPolicyRoleRepository.save(rolePolicy);
+  }
+
+  @Test
+  public void removeTest() {
+    abstractResourceServerPolicyRepository.deleteById(9L);
+  }
+
+  @Test
+  public void userTest2() {
+    ResourceServerPolicy userPolicy =
+        ResourceServerPolicy.createUserPolicy(1L, "用户策略", "用户策略", Set.of(new PolicyUser(1L)));
+    resourceServerPolicyRepository.save(userPolicy);
+  }
+
+  @Test
+  public void roleTest2() {
+    ResourceServerPolicy rolePolicy =
+        ResourceServerPolicy.createRolePolicy(
+            6L, "角色策略6", "角色策略", Set.of(new PolicyRole(1L, false)));
+    resourceServerPolicyRepository.save(rolePolicy);
+  }
+
+  @Test
+  public void removeTest2() {
+    resourceServerPolicyRepository.deleteById(8L);
   }
 }

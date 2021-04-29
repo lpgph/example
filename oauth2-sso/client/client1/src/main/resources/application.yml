@@ -44,7 +44,7 @@ spring:
           uaa:
             authorization-uri: http://localhost:8090/oauth/authorize
             token-uri: http://localhost:8090/oauth/token
-            user-info-uri: http://localhost:8090/userinfo
+            user-info-uri: http://localhost:8071/userinfo
             user-name-attribute: name
             jwk-set-uri: http://localhost:8090/token_keys
 

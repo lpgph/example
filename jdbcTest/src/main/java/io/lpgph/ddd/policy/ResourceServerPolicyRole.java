@@ -12,7 +12,6 @@ import java.util.Set;
 /** 客户端授权策略 如对角色进行授权 对用户进行授权 对客户端进行授权 对组进行授权 */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
 @Getter
 public class ResourceServerPolicyRole extends AbstractResourceServerPolicy {
 
@@ -53,9 +52,7 @@ public class ResourceServerPolicyRole extends AbstractResourceServerPolicy {
 //        .roles(roles)
 //        .build();
 
-    ResourceServerPolicyRole obj =   ResourceServerPolicyRole.builder()
-        .roles(roles)
-        .build();
+    ResourceServerPolicyRole obj = new ResourceServerPolicyRole(roles);
     obj.setClientId(clientId);
     obj.setName(name);
     obj.setDescription(description);

@@ -1,6 +1,5 @@
 package io.lpgph.res.order;
 
-import io.lpgph.res.order.bean.UserInfo;
 import io.lpgph.res.order.json.JsonUtil;
 import io.lpgph.res.order.rpc.IGoodsService;
 import lombok.AllArgsConstructor;
@@ -12,6 +11,7 @@ import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 import java.security.Principal;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 
 @Slf4j

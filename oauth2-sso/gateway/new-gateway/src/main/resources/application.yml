@@ -40,7 +40,7 @@ spring:
           '[/**]':
             allowedHeaders: "*" # 允许访问的头信息,*表示全部
             maxAge: 1800  # 预检请求的缓存时间（秒），即在这个时间段里，对于相同的跨域请求不会再预检了
-#            allowedOrigins: "*" # 允许向该服务器提交请求的URI，*表示全部允许。。这里尽量限制来源域，比如http://xxxx:8080 ,以降低安全风险
+            #            allowedOrigins: "*" # 允许向该服务器提交请求的URI，*表示全部允许。。这里尽量限制来源域，比如http://xxxx:8080 ,以降低安全风险
             allowedOriginPattern: "*" # 替代 allowedOrigins
             allowCredentials: true  # 允许cookies跨域
             allowedMethods: "*"
@@ -72,10 +72,12 @@ spring:
             - Path=/order/**
           filters:
             - StripPrefix=1
-        - id: user
+        - id: uaa
           uri: http://localhost:8090
           predicates:
             - Path=/uaa/**
+          filters:
+            - StripPrefix=1
   #        - id: uaa
   #          uri: lb://uaa
   #          predicates:
@@ -94,11 +96,19 @@ spring:
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: all
+          app:
+            provider: uaa
+            client-id: app
+            client-secret: app
+            client-name: "账户密码授权"
+            authorization-grant-type: password
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: all
         provider:
           uaa:
             authorization-uri: http://localhost:8090/oauth/authorize
             token-uri: http://localhost:8090/oauth/token
-            user-info-uri: http://localhost:8090/userinfo
+            user-info-uri: http://localhost:8071/userinfo
             user-name-attribute: sub
             jwk-set-uri: http://localhost:8090/oauth/token_key
 #            user-info-authentication-method: header
