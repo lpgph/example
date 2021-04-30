@@ -27,8 +27,8 @@ public class CustomTokenEnhancer implements TokenEnhancer {
       log.info(
           "\n\n\n\n UserAuthentication \n{}\n\n\n",
           JsonUtil.toJson(authentication.getUserAuthentication()));
-      User user = (User) authentication.getUserAuthentication().getPrincipal();
-      additionalInfo.put("userId", user.getUserId());
+//      User user = (User) authentication.getUserAuthentication().getPrincipal();
+      additionalInfo.put("userId", 1L);
     }
     ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
     return accessToken;

@@ -20,7 +20,6 @@ public class UserController {
 
   private final PasswordEncoder passwordEncoder;
 
-
   @GetMapping("/userinfo")
   public Object user(@AuthenticationPrincipal(expression = "claims") Map<String, Object> claims) {
     log.info("\n\nuserinfo\n{}\n\n\n", JsonUtil.toJson(claims));
@@ -35,10 +34,9 @@ public class UserController {
     return attributes;
   }
 
-
   @GetMapping("/user/auth")
   public UserInfo userInfo(String username) {
-    log.info("\n\n  获取用户信息 \n\n");
+    log.info("\n\n  获取用户信息  {} \n\n", username);
     return new UserInfo(
         Math.abs(new Random().nextLong()),
         "admin",

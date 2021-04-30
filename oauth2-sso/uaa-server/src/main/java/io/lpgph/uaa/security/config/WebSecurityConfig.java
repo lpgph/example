@@ -12,9 +12,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -84,6 +88,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .csrf(AbstractHttpConfigurer::disable)
         .anonymous(AbstractHttpConfigurer::disable)
         .oauth2Client(withDefaults())
+        //        .oauth2Login(withDefaults())
+        .oauth2Login(
+            login -> login.successHandler(new Oauth2LoginSuccessHandler())) // 使用第三方认证成功后进行二次处理
         // 解决不允许显示在iframe的问题
         .headers(headers -> headers.frameOptions().disable().cacheControl());
     //    http.addFilter(new TestAuthenticationFilter(authenticationManager()));

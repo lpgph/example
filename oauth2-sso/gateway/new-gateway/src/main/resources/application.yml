@@ -96,14 +96,13 @@ spring:
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: all
-          app:
-            provider: uaa
-            client-id: app
-            client-secret: app
-            client-name: "账户密码授权"
-            authorization-grant-type: password
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-            scope: all
+#          app:
+#            provider: uaa
+#            client-id: app
+#            client-secret: app
+#            client-name: "账户密码授权"
+#            authorization-grant-type: password
+#            scope: all
         provider:
           uaa:
             authorization-uri: http://localhost:8090/oauth/authorize
@@ -116,10 +115,11 @@ spring:
 
 logging:
   level:
+    web: INFO
     org:
-      springframework: INFO
+      springframework: INFO  # INFO TRACE
     com:
       alibaba:
-        nacos: ERROR
+        nacos: INFO
 
 

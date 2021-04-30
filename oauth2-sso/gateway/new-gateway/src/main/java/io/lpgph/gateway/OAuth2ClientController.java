@@ -5,12 +5,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +32,17 @@ public class OAuth2ClientController {
 
   private final WebClient webClient;
 
+  private final ReactiveClientRegistrationRepository reactiveClientRegistrationRepository;
+
+
+
+  @GetMapping("/test")
+  public String test() {
+    return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+  }
+
+
+
   @GetMapping("/")
   public Object index(
       @RegisteredOAuth2AuthorizedClient("cms") OAuth2AuthorizedClient authorizedClient,
@@ -35,14 +54,31 @@ public class OAuth2ClientController {
     return map;
   }
 
-//  @PostMapping("/login")
-//  public Object login(String username) {
-//    return this.webClient
-//            .post().attributes("username","")
-//            .uri("http://127.0.0.1:8090/oauth/token")
-//            .attributes(clientRegistrationId("app"))
-//            .retrieve()
-//            .bodyToMono(Object.class)
-//            .block();
-//  }
+  /*  1. 请求网关 网关需要授权  转向登录客户端  登录客户端进行(帐号密码/第三方授权)登录 认证成功后跳转到授权服务  授权服务生成token
+   *
+   *
+   *
+   *
+   */
+  @PostMapping("/login")
+  public Object login(@RequestBody LoginInfo loginInfo) {
+    Mono<ClientRegistration> reactiveRegistration =
+        reactiveClientRegistrationRepository.findByRegistrationId("app");
+    ClientRegistration registration = reactiveRegistration.block();
+    if (registration == null) throw new RuntimeException("appName 错误");
+    MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+    map.add("client_id", registration.getClientId());
+    map.add("client_secret", registration.getClientSecret());
+    map.add("grant_type", "password");
+    map.add("username", loginInfo.getUsername());
+    map.add("password", loginInfo.getPassword());
+    return this.webClient
+        .post()
+        .uri(registration.getProviderDetails().getTokenUri())
+        .attributes(clientRegistrationId("app"))
+        .bodyValue(map)
+        .retrieve()
+        .bodyToMono(Object.class)
+        .block();
+  }
 }

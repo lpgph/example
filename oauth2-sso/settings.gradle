@@ -16,7 +16,9 @@ include(':samples:client')
 include(':samples:resourceserver')
 
 include('uaa-server')  // uaa auth
-include('uaa-server2')  // uaa auth
+
+//include('auth-server')  // uaa auth
+//include('identity-server')  // uaa auth
 
 include(':client:client1')
 include(':client:client2')
