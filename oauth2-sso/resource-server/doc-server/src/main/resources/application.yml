@@ -1,0 +1,58 @@
+server:
+  port: 8071
+  tomcat:
+    uri-encoding: UTF-8
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+  http2:
+    enabled: true
+
+spring:
+  application:
+    name: order
+  output:
+    ansi:
+      enabled: ALWAYS #控制台彩色输出
+# ===== SpringDoc配置 ===== #
+springdoc:
+  #指定接口包扫描
+  packagesToScan: io.lpgph.res.doc
+  defaultProducesMediaType: application/json # 默认响应类型
+  #或者指定访问接口路径扫描
+  #  pathsToMatch: /hs/**, /hsType/**
+  swagger-ui:
+    # 自定义的文档界面访问路径。默认访问路径是/swagger-ui.html
+    path: /swagger-ui.html
+    # 字符串类型，一共三个值来控制操作和标记的默认展开设置。它可以是“list”（仅展开标记）、“full”（展开标记和操作）或“none”（不展开任何内容）。
+    docExpansion: none
+    # 布尔值。控制“试用”请求的请求持续时间（毫秒）的显示。
+    displayRequestDuration: true
+    # 布尔值。控制供应商扩展（x-）字段和操作、参数和架构值的显示。
+    showExtensions: true
+    # 布尔值。控制参数的扩展名（pattern、maxLength、minLength、maximum、minminimum）字段和值的显示。
+    showCommonExtensions: true
+    #    # 布尔值。禁用swagger用户界面默认petstore url。（从v1.4.1开始提供）。
+    #    disable-swagger-default-url: true
+    tags-sorter: alpha
+  api-docs:
+    # enabled the /v3/api-docs endpoint
+    enabled: true
+    # 自定义的文档api元数据访问路径。默认访问路径是/v3/api-docs
+    path: /v3/api-docs
+    # 布尔值。在@Schema（名称name、标题title和说明description，三个属性）上启用属性解析程序。
+    resolve-schema-properties: true
+  # 布尔值。实现OpenApi规范的打印。
+  writer-with-default-pretty-printer: true
+  cache:
+    disabled: true
+
+logging:
+  level:
+    web: INFO
+    org:
+      springframework: INFO  # INFO TRACE
+    com:
+      alibaba:
+        nacos: INFO

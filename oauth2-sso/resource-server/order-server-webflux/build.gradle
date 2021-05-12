@@ -87,6 +87,7 @@ dependencies {
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
+    implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.5.4'
     // 支持jdk8+
     implementation("com.fasterxml.jackson.module:jackson-module-parameter-names:${jacksonVersion}")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}")
