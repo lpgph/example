@@ -11,11 +11,11 @@ import javax.validation.constraints.Size;
 public class CreateCommand {
 
   @NotBlank
-  @Size(min = 0, max = 20)
+  @Size(max = 20)
   @Schema(description = "名称")
   String name;
 
-  @Size(min = 0, max = 255)
+  @Size(max = 255)
   @Schema(description = "描述")
   String description;
 }

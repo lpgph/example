@@ -1,5 +1,6 @@
 package io.lpgph.res.doc;
 
+import io.lpgph.res.doc.command.ChangeDiscardCommand;
 import io.lpgph.res.doc.command.CreateCommand;
 import io.lpgph.res.doc.common.bean.page.PageResult;
 import io.lpgph.res.doc.common.bean.result.Result;
@@ -17,6 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -59,7 +63,9 @@ public class CategoryController {
             content = @Content(schema = @Schema(implementation = Result.class)))
       })
   @PostMapping
-  public void create(@RequestBody CreateCommand command) {}
+  public void create(@RequestBody CreateCommand command) {
+    System.out.println("create");
+  }
 
   @Operation(
       summary = "修改类目",
@@ -93,7 +99,9 @@ public class CategoryController {
             content = @Content(schema = @Schema(implementation = Result.class)))
       })
   @PutMapping("{id}")
-  public void change(@PathVariable("id") long id, @RequestBody CreateCommand command) {}
+  public void change(@PathVariable("id") long id, @RequestBody CreateCommand command) {
+    System.out.println("change");
+  }
 
   @Operation(
       summary = "移动类目节点",
@@ -128,7 +136,9 @@ public class CategoryController {
             content = @Content(schema = @Schema(implementation = Result.class)))
       })
   @PutMapping("{id}/move/{toId}")
-  public void move(@PathVariable("id") long id, @PathVariable("toId") long toId) {}
+  public void move(@PathVariable("id") long id, @PathVariable("toId") long toId) {
+    System.out.println("move");
+  }
 
   @Operation(
       summary = "废弃类目",
@@ -161,8 +171,10 @@ public class CategoryController {
             description = "系统内部异常",
             content = @Content(schema = @Schema(implementation = Result.class)))
       })
-  @PatchMapping("{id}/discard")
-  public void discard(@PathVariable("id") long id) {}
+  @PutMapping("{id}/discard")
+  public void discard(@PathVariable("id") long id) {
+    System.out.println("discard");
+  }
 
   @Operation(
       summary = "批量废弃类目",
@@ -195,7 +207,14 @@ public class CategoryController {
             content = @Content(schema = @Schema(implementation = Result.class)))
       })
   @PostMapping("discard")
-  public void discard(@RequestBody Set<Long> ids) {}
+  public void discard(@RequestBody Set<Long> ids) {
+    System.out.println("discard");
+  }
+
+  @PostMapping("batch-discard")
+  public void discard2(@RequestBody Set<ChangeDiscardCommand> command) {
+    System.out.println("discard");
+  }
 
   @Operation(
       summary = "还原废弃类目",
@@ -229,7 +248,9 @@ public class CategoryController {
             content = @Content(schema = @Schema(implementation = Result.class)))
       })
   @PatchMapping("{id}/restore")
-  public void restore(@PathVariable("id") long id) {}
+  public void restore(@PathVariable("id") long id) {
+    System.out.println("restore");
+  }
 
   @Operation(
       summary = "批量还原废弃类目",
@@ -262,7 +283,9 @@ public class CategoryController {
             content = @Content(schema = @Schema(implementation = Result.class)))
       })
   @PostMapping("restore")
-  public void restore(@RequestBody Set<Long> ids) {}
+  public void restore(@RequestBody Set<Long> ids) {
+    System.out.println("restore");
+  }
 
   @Operation(
       summary = "启用已禁用类目",
@@ -296,7 +319,9 @@ public class CategoryController {
             content = @Content(schema = @Schema(implementation = Result.class)))
       })
   @PatchMapping("{id}/enable")
-  public void enable(@PathVariable("id") long id) {}
+  public void enable(@PathVariable("id") long id) {
+    System.out.println("enable");
+  }
 
   @Operation(
       summary = "批量启用已禁用类目",
@@ -329,7 +354,9 @@ public class CategoryController {
             content = @Content(schema = @Schema(implementation = Result.class)))
       })
   @PostMapping("enable")
-  public void enable(@RequestBody Set<Long> ids) {}
+  public void enable(@RequestBody Set<Long> ids) {
+    System.out.println("enable");
+  }
 
   @Operation(
       summary = "禁用已启用类目",
@@ -363,7 +390,9 @@ public class CategoryController {
             content = @Content(schema = @Schema(implementation = Result.class)))
       })
   @PatchMapping("{id}/disable")
-  public void disable(@PathVariable("id") long id) {}
+  public void disable(@PathVariable("id") long id) {
+    System.out.println("disable");
+  }
 
   @Operation(
       summary = "批量禁用已启用类目",
@@ -396,7 +425,9 @@ public class CategoryController {
             content = @Content(schema = @Schema(implementation = Result.class)))
       })
   @PostMapping("disable")
-  public void disable(@RequestBody Set<Long> ids) {}
+  public void disable(@RequestBody Set<Long> ids) {
+    System.out.println("disable");
+  }
 
   @Operation(
       summary = "删除已废弃类目",
@@ -430,7 +461,9 @@ public class CategoryController {
             content = @Content(schema = @Schema(implementation = Result.class)))
       })
   @DeleteMapping("{id}")
-  public void remove(@PathVariable("id") long id) {}
+  public void remove(@PathVariable("id") long id) {
+    System.out.println("remove");
+  }
 
   @Operation(
       summary = "批量删除已废弃类目",
@@ -463,7 +496,14 @@ public class CategoryController {
             content = @Content(schema = @Schema(implementation = Result.class)))
       })
   @PostMapping("remove")
-  public void remove(@RequestBody Set<Long> ids) {}
+  public void remove(@RequestBody @NotEmpty long[] ids) {
+    System.out.println("remove");
+  }
+
+  @PostMapping("batch")
+  public void batch(@RequestBody @NotEmpty long[] ids) {
+    System.out.println("remove");
+  }
 
   @Operation(
       summary = "查询",
@@ -500,15 +540,18 @@ public class CategoryController {
       })
   @GetMapping
   public PageResult<QueryResult> listPageByQuery(
-      @RequestParam int page,
-      @RequestParam int pageSize,
-      String sort,
-      Long id,
-      String name,
-      Boolean discard,
-      Boolean enable,
-      @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime afterDate,
-      @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime beforeDate) {
+      @RequestParam @Size() int page,
+      @RequestParam @Size(max = 100) int pageSize,
+      @RequestParam(required = false) String sort,
+      @RequestParam(required = false) Long id,
+      @RequestParam(required = false) String name,
+      @RequestParam(required = false) Boolean discard,
+      @RequestParam(required = false) Boolean enable,
+      @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+          LocalDateTime afterDate,
+      @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+          LocalDateTime beforeDate) {
+    System.out.println("list");
     return null;
   }
 
@@ -535,7 +578,8 @@ public class CategoryController {
             content = @Content(schema = @Schema(implementation = Result.class)))
       })
   @GetMapping("tree")
-  public List<QueryResult> list() {
+  public List<QueryResult> tree() {
+    System.out.println("tree");
     return null;
   }
 
@@ -573,11 +617,40 @@ public class CategoryController {
       })
   @GetMapping("{id}")
   public QueryResult getInfo(@PathVariable("id") long id) {
+    System.out.println("get");
     return null;
   }
 
-  //  @GetMapping("/option")
-  //  public List<CategoryOptionResult> findOptionByName() {
-  //    return categoryQueryService.findOptionByName();
-  //  }
+  @Operation(
+      summary = "根据关键字查询选项",
+      description = "返回： 类目选项",
+      parameters = {
+        @Parameter(
+            name = "access_token",
+            description = "授权码",
+            required = true,
+            schema = @Schema(implementation = String.class),
+            in = ParameterIn.HEADER,
+            example = "abc"),
+        @Parameter(name = "keyword", description = "关键字", example = "k"),
+        @Parameter(name = "limit", description = "显示条数", example = "20")
+      },
+      responses = {
+        @ApiResponse(responseCode = "200", description = "返回成功"),
+        @ApiResponse(
+            responseCode = "401",
+            description = "参数错误",
+            content = @Content(schema = @Schema(implementation = Result.class))),
+        @ApiResponse(
+            responseCode = "500",
+            description = "系统内部异常",
+            content = @Content(schema = @Schema(implementation = Result.class)))
+      })
+  @GetMapping("/option")
+  public List<QueryResult> findOptionByName(
+      @RequestParam @NotBlank @Size(max = 20) String keyword,
+      @RequestParam(required = false) @Size(max = 100) Integer limit) {
+    System.out.println("option");
+    return null;
+  }
 }
