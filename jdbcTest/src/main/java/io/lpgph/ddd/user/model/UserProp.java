@@ -1,6 +1,7 @@
 package io.lpgph.ddd.user.model;
 
 import lombok.*;
+import org.springframework.data.relational.core.mapping.Column;
 
 /** 产品属性 */
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
@@ -8,7 +9,8 @@ import lombok.*;
 @Value
 public class UserProp {
 
-  Boolean isVip;
+  @Column("is_vip")
+  Boolean vip;
 
   Integer level;
 }

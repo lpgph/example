@@ -2,8 +2,14 @@ package io.lpgph.ddd.user.model;
 
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.annotation.*;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Embedded;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
+
+import java.time.LocalDateTime;
+import java.util.Set;
 
 @Slf4j
 @Builder
@@ -11,21 +17,22 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("jdbc_user")
 public class User {
 
-  @Embedded(prefix = "user_", onEmpty = Embedded.OnEmpty.USE_NULL)
-  private UserId userId;
+  @Id private Long id;
 
   private String name;
 
-  private String[] tags;
+  @MappedCollection(idColumn = "user_id")
+  private Set<UserTag> tags;
 
-  private UserProp prop;
+  @Embedded.Empty private UserProp prop;
 
-  private UserAddress[] address;
+  @MappedCollection(idColumn = "user_id")
+  private Set<UserAddress> addresses;
 
-  public static User create(UserId userId, String name) {
-    User user = User.builder().userId(userId).name(name).build();
+  public static User create(
+      String name, Set<UserTag> tags, UserProp prop, Set<UserAddress> addresses) {
     //    user.registerEvent(new CreateUserEvent("user_____" + name));
-    return user;
+    return User.builder().name(name).tags(tags).prop(prop).addresses(addresses).build();
   }
   //
   //  @Transient private final transient List<DomainEvent> domainEvents = new ArrayList<>();
@@ -47,19 +54,10 @@ public class User {
   //    domainEvents.clear();
   //  }
 
-  public void changeTags(String... tag) {
-    this.tags = tag;
-  }
-
-  public void changeAddress(UserAddress... addresses) {
-    this.address = addresses;
-  }
-
-  public void changeProp(UserProp prop) {
-    this.prop = prop;
-  }
-
-  public void changeName(String name) {
+  public void change(String name, Set<UserTag> tags, UserProp prop, Set<UserAddress> addresses) {
     this.name = name;
+    this.tags = tags;
+    this.prop = prop;
+    this.addresses = addresses;
   }
 }

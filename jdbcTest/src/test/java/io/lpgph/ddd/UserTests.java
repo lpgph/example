@@ -2,8 +2,13 @@ package io.lpgph.ddd;
 
 import com.querydsl.sql.codegen.MetaDataExporter;
 import io.lpgph.ddd.event.model.EventStored;
+import io.lpgph.ddd.user.UserApplicationService;
+import io.lpgph.ddd.user.command.ChangeUserCommand;
+import io.lpgph.ddd.user.command.CreateUserCommand;
 import io.lpgph.ddd.user.model.*;
 import io.lpgph.ddd.event.model.EventStoredRepository;
+import io.lpgph.ddd.user.representation.UserQueryService;
+import io.lpgph.ddd.user.representation.response.UserInfoResult;
 import io.lpgph.ddd.utils.json.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -24,6 +29,10 @@ class UserTests {
   @Autowired private EventStoredRepository eventStoredRepository;
 
   @Autowired private UserRepository userRepository;
+
+  @Autowired private UserApplicationService userApplicationService;
+
+  @Autowired private UserQueryService userQueryService;
 
   @Autowired private DataSource dataSource;
 
@@ -47,20 +56,19 @@ class UserTests {
   @Test
   void create() throws InterruptedException {
     Random random = new Random(System.currentTimeMillis());
-        User user = User.create(UserId.create(random.nextLong()), "test");
-//    User user = User.create("test");
-    user.changeTags("阳光", "运动", "勇敢");
-    user.changeProp(new UserProp(true, 3));
-    user.changeAddress(new UserAddress("家", "连云路"), new UserAddress("公司", "平安路"));
+    User user =
+        User.create(
+            "test",
+            Set.of(UserTag.create("阳光"), UserTag.create("运动"), UserTag.create("勇敢")),
+            new UserProp(true, 3),
+            Set.of(new UserAddress("家", "连云路"), new UserAddress("公司", "平安路")));
     userRepository.save(user);
     log.info("\n\n\n===============================\n\n\n");
   }
 
   @Test
   void query2() {
-    userRepository
-        .findByUserId(UserId.create(38L))
-        .ifPresent(u -> log.info("\n\n\n{}\n\n\n", JsonUtil.toJson(u)));
+    userRepository.findById(38L).ifPresent(u -> log.info("\n\n\n{}\n\n\n", JsonUtil.toJson(u)));
   }
 
   @Test
@@ -71,23 +79,45 @@ class UserTests {
 
   @Test
   void remove() {
-    userRepository.findByUserId(UserId.create(38L)).ifPresent(u -> userRepository.remove(u));
+    userRepository.findById(38L).ifPresent(u -> userRepository.remove(u));
   }
 
   @Test
   void change() {
     userRepository
-        .findByUserId(UserId.create(38L))
+        .findById(38L)
         .ifPresent(
             o -> {
-              o.changeName("李四");
+              o.change(
+                  "李四",
+                  Set.of(UserTag.create("阳光"), UserTag.create("运动"), UserTag.create("勇敢")),
+                  new UserProp(true, 3),
+                  Set.of(new UserAddress("家", "连云路"), new UserAddress("公司", "平安路")));
               userRepository.save(o);
             });
   }
 
   @Test
+  void serviceCreate() {
+    CreateUserCommand command = new CreateUserCommand("test2", true, 3, Set.of("阳光", "运动", "勇敢"));
+    userApplicationService.create(command);
+  }
+
+  @Test
+  void serviceChange() {
+    ChangeUserCommand command = new ChangeUserCommand("李四2", true, 3, Set.of("阳光", "运动", "勇敢"));
+    userApplicationService.change(2L, command);
+  }
+
+  @Test
+  void serviceQuery() {
+    UserInfoResult result = userQueryService.getInfoById(2L);
+    log.info(JsonUtil.toJson(result));
+  }
+
+  @Test
   void createEvent() {
-    eventStoredRepository.save(new EventStored(new CreateUserEvent(UserId.create(1L), "ttttt")));
+    eventStoredRepository.save(new EventStored(new CreateUserEvent(1L, "ttttt")));
   }
 
   @Test

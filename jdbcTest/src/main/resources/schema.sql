@@ -1,19 +1,38 @@
 CREATE TABLE `jdbc_user`
 (
-    `id`           bigint                                 NOT NULL AUTO_INCREMENT,
-    `name`         varchar(50) COLLATE utf8mb4_general_ci not NULL,
-    `created_by`   bigint                                 not NULL,
-    `gmt_create`   datetime                               not NULL,
-    `gmt_modified` datetime                               not NULL,
-    `modified_by`  bigint                                 not NULL,
-    `version`      bigint                                 not null,
-    `is_delete`    tinyint(1) default 0,
+    `id`           bigint      NOT NULL AUTO_INCREMENT,
+    `name`         varchar(50) not NULL,
+    `is_vip`       bit(1)      not NULL default b'0',
+    `level`        int         not NULL,
+    `created_by`   bigint      not NULL,
+    `gmt_create`   datetime    not NULL,
+    `gmt_modified` datetime    not NULL,
+    `modified_by`  bigint      not NULL,
+    `version`      bigint      not null,
+    `is_delete`    tinyint(1)           default 0,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci;
 
+CREATE TABLE `jdbc_user_tag`
+(
+    `user_id` bigint      not NULL,
+    `name`    varchar(50) not NULL,
+    UNIQUE KEY uk_u_n (`user_id`, `name`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci;
 
+CREATE TABLE `jdbc_user_address`
+(
+    `user_id` bigint      not NULL,
+    `tag`     varchar(50) not NULL,
+    `address` varchar(50) not NULL,
+    UNIQUE KEY uk_u_n (`user_id`, `tag`, `address`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci;
 
 CREATE TABLE `jdbc_book`
 (
@@ -116,7 +135,6 @@ CREATE TABLE `jdbc_event_stored`
 
 
 
-
 CREATE TABLE `resource_server_policy`
 (
     `id`            bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '自增长id,委派标识',
@@ -125,7 +143,7 @@ CREATE TABLE `resource_server_policy`
     `description`   varchar(255)    NOT NULL DEFAULT '' COMMENT '描述',
     `type`          tinyint         NOT NULL DEFAULT 0 COMMENT '策略类型 0 角色 1 客户端 2 时间 3 用户 4 用户组',
 
-    `created_by`     bigint unsigned NOT NULL default 0 COMMENT '创建人',
+    `created_by`    bigint unsigned NOT NULL default 0 COMMENT '创建人',
     `created_date`  DATETIME        NOT NULL COMMENT '创建时间',
     `modified_by`   bigint unsigned NOT NULL default 0 COMMENT '修改人',
     `modified_date` DATETIME        NOT NULL COMMENT '修改时间',

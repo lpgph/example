@@ -2,6 +2,7 @@ package io.lpgph.ddd.user.model;
 
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,16 +11,15 @@ import java.util.Optional;
 
 // CrudRepository
 // 如果xml存在则优先执行xml中的
-public interface UserRepository extends Repository<User, Long> {
+public interface UserRepository extends CrudRepository<User, Long> {
 
   Optional<User> findByName(String name);
 
   List<User> findAllByProp(UserProp prop);
 
-  void save(User user);
+  boolean existsByName(String name);
 
-  //  @Query(value = "select * from jdbc_user where user_id = :id ")
-  Optional<User> findByUserId(UserId id);
+  boolean existsByNameAndIdNot(String name, long id);
 
   //  @Query(value = "update User u set is_deleted=true where u.id = :#{#user.id}")
   @Transactional
@@ -30,7 +30,7 @@ public interface UserRepository extends Repository<User, Long> {
   @Transactional
   @Modifying
   @Query(value = "update jdbc_user set is_deleted=false where user_id = :id.id")
-  void recovery(UserId id);
+  void recovery(Long id);
 
   //  @Modifying
   //  @Transactional

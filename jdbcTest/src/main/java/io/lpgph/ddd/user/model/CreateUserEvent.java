@@ -10,7 +10,7 @@ import lombok.*;
 public class CreateUserEvent extends UserEvent {
   String name;
 
-  public CreateUserEvent(UserId userId, String name) {
+  public CreateUserEvent(Long userId, String name) {
     super(userId);
     this.name = name;
   }

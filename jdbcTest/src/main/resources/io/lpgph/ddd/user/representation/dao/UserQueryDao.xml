@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.lpgph.ddd.user.representation.dao.UserQueryDao">
+    <resultMap id="JdbcUserInfoResult"
+               type="io.lpgph.ddd.user.representation.response.UserInfoResult">
+		    <id column="id" property="id" />
+            <result column="name" property="name" /> 
+            <result column="is_vip" property="vip" /> 
+            <result column="level" property="level" /> 
+            <result column="created_by" property="createdBy" /> 
+            <result column="gmt_create" property="gmtCreate" /> 
+            <result column="gmt_modified" property="gmtModified" /> 
+            <result column="modified_by" property="modifiedBy" /> 
+            <result column="version" property="version" /> 
+            <result column="is_delete" property="delete" /> 
+    </resultMap>
+    <select id="getInfoById"  resultMap="JdbcUserInfoResult">
+        select
+        id,
+        name,
+        is_vip,
+        level,
+        created_by,
+        gmt_create,
+        gmt_modified,
+        modified_by,
+        version,
+        is_delete
+        from jdbc_user
+        where id = #{id}
+    </select>
+
+    <resultMap id="JdbcUserOptionResult"
+               type="io.lpgph.ddd.user.representation.response.UserOptionResult">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+    </resultMap>
+    <select id="findOptionByName" resultMap="JdbcUserOptionResult">
+        select id,
+               `name`
+        from jdbc_user
+        where `name` like concat('%', #{keyword}, '%')
+        limit #{limit}
+    </select>
+
+    <select id="countByQuery" resultType="long">
+        SELECT count(*)
+        FROM jdbc_user
+        <where>
+            <if test="query != null">
+                <include refid="query"/>
+            </if>
+        </where>
+    </select>
+    <resultMap id="JdbcUserResult"
+               type="io.lpgph.ddd.user.representation.response.UserResult">
+		    <id column="id" property="id" />
+            <result column="name" property="name" /> 
+            <result column="is_vip" property="vip" /> 
+            <result column="level" property="level" /> 
+            <result column="created_by" property="createdBy" /> 
+            <result column="gmt_create" property="gmtCreate" /> 
+            <result column="gmt_modified" property="gmtModified" /> 
+            <result column="modified_by" property="modifiedBy" /> 
+            <result column="version" property="version" /> 
+            <result column="is_delete" property="delete" /> 
+    </resultMap>
+    <select id="listPageByQuery" resultMap="JdbcUserResult">
+        SELECT
+        id,
+        name,
+        is_vip,
+        level,
+        created_by,
+        gmt_create,
+        gmt_modified,
+        modified_by,
+        version,
+        is_delete
+        FROM jdbc_user
+        <where>
+            <if test="query != null">
+                <include refid="query"/>
+            </if>
+        </where>
+        <if test="sort != null">
+            <!--@ignoreSql-->
+            order by
+            <foreach item="item" collection="sort" separator=",">
+                <choose>
+                    <when test="item.field == 'createdDate'">
+                        created_date
+                    </when>
+                    <when test="item.field == 'modifiedDate'">
+                        modified_date
+                    </when>
+                    <when test="item.field == 'name'">
+                        name
+                    </when>
+                    <when test="item.field == 'id'">
+                        id
+                    </when>
+                    <otherwise>
+                        null
+                    </otherwise>
+                </choose>
+                <if test="item.asc == false">
+                    desc
+                </if>
+            </foreach>
+        </if>
+        <if test="page != null">
+            limit #{page.offset}, #{page.limit}
+        </if>
+    </select>
+
+    <sql id="query">
+        <if test="query.id != null">
+            AND id = #{query.id}
+        </if>
+        <if test="query.name != null">
+            AND name like concat('%',#{query.name},'%')
+        </if>
+        <if test="query.discard != null">
+            AND is_discard = #{query.discard}
+        </if>
+        <if test="query.enable != null">
+            AND is_enable = #{query.enable}
+        </if>
+        <if test="query.afterDate != null">
+            AND created_date >= #{query.afterDate}
+        </if>
+        <if test="query.beforeDate != null">
+            AND created_date &lt;= #{query.beforeDate}
+        </if>
+    </sql>
+</mapper>

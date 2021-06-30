@@ -11,5 +11,5 @@ import lombok.*;
 @Getter
 public abstract class UserEvent extends DomainEvent {
 
-  private UserId userId;
+  private Long userId;
 }

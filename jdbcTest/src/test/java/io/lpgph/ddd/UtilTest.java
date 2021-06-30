@@ -3,12 +3,10 @@ package io.lpgph.ddd;
 import com.hankcs.hanlp.HanLP;
 import io.lpgph.ddd.common.DomainEvent;
 import io.lpgph.ddd.user.model.CreateUserEvent;
-import io.lpgph.ddd.user.model.UserId;
 import io.lpgph.ddd.utils.json.JsonUtil;
 import io.lpgph.ddd.utils.json.TypeReference;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -91,7 +89,7 @@ public class UtilTest {
 
   @Test
   void jsonTest2() throws ClassNotFoundException {
-    DomainEvent event = new CreateUserEvent(UserId.create(1L), "ttttt");
+    DomainEvent event = new CreateUserEvent(1L, "ttttt");
     String jsonStr = JsonUtil.toJson(event);
     log.info("\njsonStr {}\n", jsonStr);
     String clsName = event.getClass().getName();
