@@ -54,7 +54,7 @@ CREATE TABLE `jdbc_book`
 
 CREATE TABLE `jdbc_book_attr`
 (
-    `id`      bigint NOT NULL AUTO_INCREMENT,
+    `id`      bigint NOT NULL,
     `book_id` bigint not NULL,
     `prop_id` bigint not NULL,
     `name`    varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,

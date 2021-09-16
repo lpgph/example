@@ -23,7 +23,7 @@ public class BookService {
     Book newBook = bookRepo.save(book);
     log.info("\n\nbook\n{}\nnewBook\n{}\n\n", JsonUtil.toJson(book), JsonUtil.toJson(newBook));
 
-    newBook.addAttr(1L, "属性1", Set.of(1L, 2L, 3L));
+    newBook.addAttr(random.nextLong(), 1L, "属性1", Set.of(1L, 2L, 3L));
 
     //    newBook.change(new BookAd(true, false));
     if (true) throw new RuntimeException("ttttt");

@@ -33,7 +33,7 @@ public class Book {
   @MappedCollection(idColumn = "book_id")
   private Set<BookAttr> attrs;
 
-  @Embedded.Empty private BookInfo info;
+//  @Embedded.Empty private BookInfo info;
 
   /* 启用状态 */
   private StateEnum state;
@@ -86,10 +86,10 @@ public class Book {
     return book;
   }
 
-  public void changeInfo(BookInfo info) {
-    this.info = info;
-    //    this.setInfo(info);
-  }
+//  public void changeInfo(BookInfo info) {
+//    this.info = info;
+//    //    this.setInfo(info);
+//  }
 
   public void remove() {
     this.registerEvent(new RemoveBookEvent(this.id));
@@ -99,10 +99,11 @@ public class Book {
     this.name = name;
   }
 
-  public void addAttr(Long propId, String name, Set<Long> valueIds) {
+  public void addAttr(Long id, Long propId, String name, Set<Long> valueIds) {
     if (this.attrs == null) this.attrs = new HashSet<>();
     this.attrs.add(
-        new BookAttr(
+            new BookAttr(
+            id,
             propId,
             //            new PropId(propId),
             name,
@@ -112,10 +113,11 @@ public class Book {
                 .collect(Collectors.toSet())));
   }
 
-  public void changeAttr(Long propId, String name, Set<Long> valueIds) {
+  public void changeAttr(Long id, Long propId, String name, Set<Long> valueIds) {
     this.remove(propId);
     this.attrs.add(
         new BookAttr(
+            id,
             propId,
             //            new PropId(propId),
             name,

@@ -14,8 +14,8 @@ public interface BookRepo extends CrudRepository<Book, Long> {
   @Query("select * from jdbc_book  where ad like concat( '%',:keyword, '%')")
   List<Book> listAllByInfo(String keyword);
 
-  @Query("select * from Book  where Book.info.ad like concat( '%',:keyword, '%')")
-  List<Book> listAllByInfo2(String keyword);
-
-  List<Book> findAllByInfo(BookInfo bookInfo);
+//  @Query("select * from Book  where Book.info.ad like concat( '%',:keyword, '%')")
+//  List<Book> listAllByInfo2(String keyword);
+//
+//  List<Book> findAllByInfo(BookInfo bookInfo);
 }

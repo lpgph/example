@@ -6,9 +6,14 @@ import io.lpgph.ddd.user.representation.response.UserInfoResult;
 import io.lpgph.ddd.user.representation.response.UserOptionResult;
 import io.lpgph.ddd.common.bean.page.Page;
 import io.lpgph.ddd.common.bean.page.Sort;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
+@Mapper
+@Repository
 public interface UserQueryDao {
 
   UserInfoResult getInfoById(Long id);

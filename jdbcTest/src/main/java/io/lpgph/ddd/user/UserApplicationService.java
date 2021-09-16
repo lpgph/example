@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 public class UserApplicationService {
 
   private final UserRepository userRepository;
-  private final UserService userService;
 
   public void create(CreateUserCommand command) {
     if (userRepository.existsByName(command.getName())) {
