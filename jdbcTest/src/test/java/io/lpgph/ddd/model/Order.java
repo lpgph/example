@@ -2,6 +2,7 @@ package io.lpgph.ddd.model;
 
 import lombok.Getter;
 
+import java.util.Collections;
 import java.util.Set;
 
 @Getter
@@ -13,6 +14,10 @@ public class Order {
   public Order(Long orderId, Set<Item> items) {
     this.orderId = orderId;
     this.change(items);
+  }
+
+  public Set<Item> allItems() {
+    return Collections.unmodifiableSet(this.items);
   }
 
   public void change(Set<Item> items) {

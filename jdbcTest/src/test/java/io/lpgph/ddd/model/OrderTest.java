@@ -14,7 +14,7 @@ public class OrderTest {
     Set<Item> items = Set.of(new Item(1L, 1L), new Item(2L, 2L), new Item(3L, 5L));
     Order order = new Order(1L, items);
     order
-        .getItems()
+        .allItems()
         .forEach(
             item -> {
               if (item.getGoodsId().equals(3L)) {
